@@ -1,0 +1,24 @@
+.section-heading {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.section-heading__eyebrow {
+  color: var(--color-accent);
+  font-size: 1rem;
+}
+
+.section-heading__title {
+  font-size: clamp(2.8rem, 6vw, 4.4rem);
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.section-heading__line {
+  width: 7rem;
+  height: 0.35rem;
+  background: var(--color-primary);
+  box-shadow: 0 0 16px rgba(0, 255, 42, 0.25);
+}

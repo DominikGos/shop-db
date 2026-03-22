@@ -1,0 +1,68 @@
+import type { Product } from "../types/product";
+
+export const products: Product[] = [
+  {
+    id: 1,
+    name: 'Koszulka "Hello World"',
+    subtitle: '// console.log("Hello World")',
+    price: 89.99,
+    category: "Koszulka",
+    visual: "terminal",
+  },
+  {
+    id: 2,
+    name: 'Bluza "404 Not Found"',
+    subtitle: "// Error 404",
+    price: 149.99,
+    category: "Bluza",
+    visual: "shadow",
+  },
+  {
+    id: 3,
+    name: 'Koszulka "Eat Sleep Code Repeat"',
+    subtitle: "// while(true) { code(); }",
+    price: 89.99,
+    category: "Koszulka",
+    visual: "matrix",
+  },
+  {
+    id: 4,
+    name: 'Koszulka "I Love Python"',
+    subtitle: "// import python",
+    price: 89.99,
+    category: "Koszulka",
+    visual: "avatar",
+  },
+  {
+    id: 5,
+    name: 'Kąpielówki "Data Stream Surfer"',
+    subtitle: "// stream.surf()",
+    price: 119.99,
+    category: "Akcesoria",
+    visual: "beach",
+  },
+  {
+    id: 6,
+    name: 'Koszulka "Ctrl + Coffee + Code"',
+    subtitle: "// if (coffee) { code(); }",
+    price: 89.99,
+    category: "Koszulka",
+    visual: "coffee",
+  },
+  {
+    id: 7,
+    name: 'Bluza "Debug Mode ON"',
+    subtitle: "// debugger; // activated",
+    price: 149.99,
+    category: "Bluza",
+    visual: "debug",
+  },
+  {
+    id: 8,
+    name: 'Koszulka "Stack Overflow Survivor"',
+    subtitle: "// stackoverflow.search()",
+    price: 89.99,
+    category: "Koszulka",
+    visual: "stackoverflow",
+  },
+];
