@@ -1,0 +1,21 @@
+[ {
+  "id" : "59b75f83-f90e-4a30-aef1-897a6b440748",
+  "name" : "Myszka Gamingowa",
+  "price" : 80.0,
+  "quantity" : 90
+}, {
+  "id" : "c9abd5b4-9a92-4312-8456-f8fc5f4343cf",
+  "name" : "Myszka Gamingowa",
+  "price" : 80.0,
+  "quantity" : 90
+}, {
+  "id" : "c05d25a5-4933-4200-a291-cb6364dcd0ce",
+  "name" : "Myszka Gamingowa",
+  "price" : 80.0,
+  "quantity" : 90
+}, {
+  "id" : "12f6ea98-cc31-4a38-b8ec-bebd5b648ffd",
+  "name" : "Myszka Gamingowa",
+  "price" : 80.0,
+  "quantity" : 90
+} ]
