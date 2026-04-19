@@ -2,7 +2,6 @@ package com.db.shop.models;
 
 public class SaleItem extends BaseModel {
 
-    private String saleId;
     private String productId;
     private int quantity;
     private double price;
@@ -11,27 +10,16 @@ public class SaleItem extends BaseModel {
     public SaleItem() {}
 
     public SaleItem(
-            String saleId,
             String productId,
-            int quantity,
-            double price
+            int quantity
     ) {
         super();
-        this.saleId = saleId;
         this.productId = productId;
         this.quantity = quantity;
-        this.price = price;
+        this.price = 0;
     }
 
     // GETTERS i SETTERS
-
-    public String getSaleId() {
-        return saleId;
-    }
-
-    public void setSaleId(String saleId) {
-        this.saleId = saleId;
-    }
 
     public String getProductId() {
         return productId;
