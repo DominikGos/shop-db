@@ -1,9 +1,34 @@
+@import "tailwindcss";
+
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  max-width: 100%;
 }
 
 body {
   margin: 0;
+  overflow-x: hidden;
+  background: #000000;
+  color: #f3f5f7;
+  font-family: "Consolas", "Courier New", monospace;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
 }
 
 #root {
