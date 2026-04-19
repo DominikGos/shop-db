@@ -1,9 +1,9 @@
 import { useState, type FormEvent } from "react";
-import type { Product } from "../../types/product";
+import type { ProductInput } from "../../types/product";
 
 type AddProductModalProps = {
   onClose: () => void;
-  onAddProduct: (product: Product) => void;
+  onAddProduct: (product: ProductInput) => Promise<void>;
 };
 
 const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
@@ -21,10 +21,10 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
     setError("");
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!name.trim() || !price || !quantity || !imageFile) {
+    if (!name.trim() || !price || !quantity) {
       setError("Uzupelnij wszystkie wymagane pola.");
       return;
     }
@@ -37,19 +37,20 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
       return;
     }
 
-    const newProduct: Product = {
-      id: Date.now(),
+    const newProduct: ProductInput = {
       name: name.trim(),
-      subtitle: `// stock: ${quantityValue}`,
       price: priceValue,
       quantity: quantityValue,
-      imageUrl: URL.createObjectURL(imageFile),
-      visual: "uploaded",
     };
 
-    onAddProduct(newProduct);
-    clearForm();
-    onClose();
+    try {
+      await onAddProduct(newProduct);
+      clearForm();
+      onClose();
+    } catch (error) {
+      console.error(error);
+      setError("Nie udalo sie dodac produktu.");
+    }
   };
 
   const handleCancel = () => {
@@ -131,7 +132,9 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
               }
             />
             <small className="font-normal text-[#7f8aa3]">
-              {imageFile ? `// selected: ${imageFile.name}` : "// required field"}
+              {imageFile
+                ? `// selected locally: ${imageFile.name}`
+                : "// image upload will be connected later"}
             </small>
           </label>
 
