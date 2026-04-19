@@ -40,7 +40,7 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
           ) : (
             <div className="absolute inset-8 grid place-items-center border border-white/10 bg-black/20 text-center">
               <p className="text-2xl font-bold text-[#00ff2a] max-[520px]:text-lg">
-                {product.category ?? "Produkt"}
+                Image placeholder
               </p>
             </div>
           )}
@@ -69,7 +69,7 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
         </p>
 
         <p className="text-lg text-[#f3f5f7]">
-          <span className="text-[#00ff2a]">▱</span> Stan:{" "}
+          <span className="text-[#00ff2a]">&gt;</span> Stan:{" "}
           <span className="font-bold text-[#00ff2a]">{product.quantity} szt.</span>
         </p>
 

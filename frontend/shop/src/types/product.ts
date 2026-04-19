@@ -1,5 +1,5 @@
 export type Product = {
-  id: number;
+  id: string;
   name: string;
   subtitle: string;
   price: number;
@@ -16,4 +16,17 @@ export type Product = {
     | "debug"
     | "stackoverflow"
     | "uploaded";
+};
+
+export type BackendProduct = {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+};
+
+export type ProductInput = {
+  name: string;
+  price: number;
+  quantity: number;
 };

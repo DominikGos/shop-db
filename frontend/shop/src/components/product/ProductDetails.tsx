@@ -15,9 +15,6 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         </p>
         <div className="grid gap-3 border-l-2 border-[#00ff2a]/40 pl-4">
           <p>
-            id: <span className="text-[#f3f5f7]">{product.id}</span>
-          </p>
-          <p>
             name: <span className="text-[#f3f5f7]">{product.name}</span>
           </p>
           <p>
