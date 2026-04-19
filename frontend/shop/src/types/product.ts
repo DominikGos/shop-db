@@ -3,7 +3,9 @@ export type Product = {
   name: string;
   subtitle: string;
   price: number;
-  category: string;
+  quantity: number;
+  category?: string;
+  imageUrl?: string;
   visual:
     | "terminal"
     | "shadow"
@@ -12,5 +14,6 @@ export type Product = {
     | "beach"
     | "coffee"
     | "debug"
-    | "stackoverflow";
+    | "stackoverflow"
+    | "uploaded";
 };
