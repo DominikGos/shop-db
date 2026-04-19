@@ -1,6 +1,7 @@
 package com.db.shop.repositories;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +16,7 @@ public class JsonDatabase<T> {
 
         mapper = new ObjectMapper();
 
+        mapper.registerModule(new JavaTimeModule());
         new File("data").mkdirs();
 
         this.file = new File("data/" + filename);
