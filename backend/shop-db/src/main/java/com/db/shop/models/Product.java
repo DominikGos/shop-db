@@ -5,6 +5,7 @@ public class Product extends BaseModel {
     private String name;
     private double price;
     private int quantity;
+    private String imagePath;
 
     public double getPrice() {
         return price;
@@ -28,6 +29,14 @@ public class Product extends BaseModel {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public Product() {}
