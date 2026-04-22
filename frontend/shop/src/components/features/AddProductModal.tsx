@@ -25,7 +25,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
     event.preventDefault();
 
     if (!name.trim() || !price || !quantity) {
-      setError("Uzupelnij wszystkie wymagane pola.");
+      setError("Uzupełnij wszystkie wymagane pola.");
       return;
     }
 
@@ -33,7 +33,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
     const quantityValue = Number(quantity);
 
     if (priceValue <= 0 || quantityValue < 0) {
-      setError("Cena musi byc wieksza od 0, a ilosc nie moze byc ujemna.");
+      setError("Cena musi być większa od 0, a ilość nie może być ujemna.");
       return;
     }
 
@@ -41,6 +41,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
       name: name.trim(),
       price: priceValue,
       quantity: quantityValue,
+      imageFile,
     };
 
     try {
@@ -49,7 +50,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
       onClose();
     } catch (error) {
       console.error(error);
-      setError("Nie udalo sie dodac produktu.");
+      setError("Nie udało się dodać produktu.");
     }
   };
 
@@ -74,24 +75,24 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
           x
         </button>
 
-        <p className="text-3xl text-[#22ff88]">// Add new product</p>
-        <h2 className="mt-2 text-lg text-[#7f8aa3]">Insert product data</h2>
+        <p className="text-3xl text-[#22ff88]">// Dodaj nowy produkt</p>
+        <h2 className="mt-2 text-lg text-[#7f8aa3]">Wprowadź dane produktu</h2>
 
         <form className="mt-9 flex flex-col gap-6" onSubmit={handleSubmit}>
           <label className="flex flex-col gap-2.5 font-bold text-[#f3f5f7]">
-            <span>Product name</span>
+            <span>Nazwa produktu</span>
             <input
               className="min-h-16 w-full border-2 border-[#00ff2a]/30 bg-white/10 px-5 py-4 text-[#f3f5f7] outline-none placeholder:text-[#f3f5f7]/45 focus:border-[#00ff2a]"
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
-              placeholder="e.g., Hello World Tee"
+              placeholder="np. Hello World Tee"
             />
-            <small className="font-normal text-[#7f8aa3]">// required field</small>
+            <small className="font-normal text-[#7f8aa3]">// pole wymagane</small>
           </label>
 
           <label className="flex flex-col gap-2.5 font-bold text-[#f3f5f7]">
-            <span>Price</span>
+            <span>Cena</span>
             <div className="flex items-center border-2 border-[#00ff2a]/30 bg-white/10 focus-within:border-[#00ff2a]">
               <input
                 className="min-h-16 w-full border-0 bg-transparent px-5 py-4 text-[#f3f5f7] outline-none placeholder:text-[#f3f5f7]/45"
@@ -104,11 +105,11 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
               />
               <strong className="pr-5 text-[#7f8aa3]">PLN</strong>
             </div>
-            <small className="font-normal text-[#7f8aa3]">// required field</small>
+            <small className="font-normal text-[#7f8aa3]">// pole wymagane</small>
           </label>
 
           <label className="flex flex-col gap-2.5 font-bold text-[#f3f5f7]">
-            <span>Quantity</span>
+            <span>Ilość</span>
             <input
               className="min-h-16 w-full border-2 border-[#00ff2a]/30 bg-white/10 px-5 py-4 text-[#f3f5f7] outline-none placeholder:text-[#f3f5f7]/45 focus:border-[#00ff2a]"
               type="number"
@@ -118,24 +119,27 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
               onChange={(event) => setQuantity(event.target.value)}
               placeholder="12"
             />
-            <small className="font-normal text-[#7f8aa3]">// required field</small>
+            <small className="font-normal text-[#7f8aa3]">// pole wymagane</small>
           </label>
 
           <label className="flex flex-col gap-2.5 font-bold text-[#f3f5f7]">
-            <span>Image file</span>
+            <span>Plik zdjęciowy</span>
+            <span className="flex min-h-16 w-full cursor-pointer items-center border-2 border-[#00ff2a]/30 bg-white/10 px-5 py-4 text-[#f3f5f7] outline-none transition hover:border-[#00ff2a]">
+              Wybierz zdjęcie
+            </span>
             <input
-              className="min-h-16 w-full cursor-pointer border-2 border-[#00ff2a]/30 bg-white/10 px-5 py-4 text-[#f3f5f7] outline-none focus:border-[#00ff2a]"
+              className="sr-only"
               type="file"
               accept="image/*"
               onChange={(event) =>
                 setImageFile(event.target.files ? event.target.files[0] : null)
               }
             />
-            <small className="font-normal text-[#7f8aa3]">
-              {imageFile
-                ? `// selected locally: ${imageFile.name}`
-                : "// image upload will be connected later"}
-            </small>
+            {imageFile ? (
+              <small className="font-normal text-[#7f8aa3]">
+                // wybrano: {imageFile.name}
+              </small>
+            ) : null}
           </label>
 
           {error ? (
@@ -149,14 +153,14 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
               className="min-h-16 w-1/2 border-2 border-[#00ff2a] bg-transparent font-bold text-[#22ff88] hover:bg-[#00ff2a]/10 max-[700px]:w-full"
               type="submit"
             >
-              Add product
+              Dodaj produkt
             </button>
             <button
               className="min-h-16 w-1/2 border-2 border-[#32435f] bg-transparent font-bold text-[#7f8aa3] hover:border-[#7f8aa3] hover:text-[#f3f5f7] max-[700px]:w-full"
               type="button"
               onClick={handleCancel}
             >
-              Cancel
+              Zamknij
             </button>
           </div>
         </form>

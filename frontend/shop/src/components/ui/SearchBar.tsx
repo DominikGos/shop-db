@@ -1,29 +1,104 @@
-const SearchBar = () => {
+import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import type { Product } from "../../types/product";
+
+type SearchBarProps = {
+  products: Product[];
+};
+
+const SearchBar = ({ products }: SearchBarProps) => {
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+
+  const foundProducts = useMemo(() => {
+    const searchValue = query.trim().toLowerCase();
+
+    if (searchValue.length < 2) {
+      return [];
+    }
+
+    return products
+      .filter((product) => product.name.toLowerCase().includes(searchValue))
+      .slice(0, 5);
+  }, [products, query]);
+
+  const showSuggestions = isFocused && foundProducts.length > 0;
+
+  const openProduct = (productId: string) => {
+    setQuery("");
+    setIsFocused(false);
+    navigate(`/products/${productId}`);
+  };
+
   return (
-    <label
-      className="flex min-h-14 w-[520px] max-w-full items-center gap-4 border-2 border-[#576c92] bg-[#07101e] px-4 max-[900px]:w-full max-[480px]:min-h-11 max-[480px]:gap-3 max-[480px]:px-3"
-      aria-label="Szukaj produktow"
-    >
-      <span
-        className="h-6 w-6 shrink-0 text-[#00ff2a] max-[480px]:h-5 max-[480px]:w-5"
-        aria-hidden="true"
+    <div className="relative w-[520px] max-w-full max-[900px]:w-full">
+      <label
+        className="flex min-h-14 w-full items-center gap-4 border-2 border-[#576c92] bg-[#07101e] px-4 max-[480px]:min-h-11 max-[480px]:gap-3 max-[480px]:px-3"
+        aria-label="Szukaj produktow"
       >
-        <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="2" />
-          <path
-            d="M16 16L21 21"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-        </svg>
-      </span>
-      <input
-        className="w-full min-w-0 border-0 bg-transparent text-white outline-none placeholder:text-[#7f8aa3] max-[480px]:text-sm max-[480px]:placeholder:text-xs"
-        type="search"
-        placeholder="Szukaj w kodzie... np. koszulka, bluza"
-      />
-    </label>
+        <span
+          className="h-6 w-6 shrink-0 text-[#00ff2a] max-[480px]:h-5 max-[480px]:w-5"
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="2" />
+            <path
+              d="M16 16L21 21"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </span>
+        <input
+          className="w-full min-w-0 border-0 bg-transparent text-white outline-none placeholder:text-[#7f8aa3] max-[480px]:text-sm max-[480px]:placeholder:text-xs"
+          type="search"
+          value={query}
+          onBlur={() => {
+            window.setTimeout(() => setIsFocused(false), 120);
+          }}
+          onChange={(event) => setQuery(event.target.value)}
+          onFocus={() => setIsFocused(true)}
+          placeholder="Szukaj w kodzie... np. koszulka, bluza"
+        />
+      </label>
+
+      {showSuggestions ? (
+        <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-40 grid border-2 border-[#00ff2a]/70 bg-black shadow-[0_18px_40px_rgba(0,0,0,0.55)]">
+          {foundProducts.map((product) => (
+            <button
+              className="grid min-h-20 grid-cols-[64px_minmax(0,1fr)] items-center gap-4 border-b border-[#00ff2a]/20 px-3 py-2 text-left transition last:border-b-0 hover:bg-[#00ff2a]/10"
+              key={product.id}
+              type="button"
+              onClick={() => openProduct(product.id)}
+            >
+              <span className="relative h-14 w-16 overflow-hidden border border-[#32435f] bg-[#111827]">
+                {product.imageUrl ? (
+                  <img
+                    className="absolute inset-0 h-full w-full object-cover"
+                    src={product.imageUrl}
+                    alt=""
+                  />
+                ) : (
+                  <span className="grid h-full place-items-center text-xs font-bold text-[#00ff2a]">
+                    PW
+                  </span>
+                )}
+              </span>
+              <span className="grid min-w-0 gap-1">
+                <span className="truncate font-bold text-[#f3f5f7]">
+                  {product.name}
+                </span>
+                <span className="text-sm font-bold text-[#00ff2a]">
+                  {product.price.toFixed(2)} PLN
+                </span>
+              </span>
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </div>
   );
 };
 

@@ -1,9 +1,14 @@
+import { useState } from "react";
 import Button from "../ui/Button";
 import type { Product } from "../../types/product";
+import type { ProductSize } from "../../types/product";
 
 type ProductInfoProps = {
   product: Product;
+  onAddToCart: (product: Product, size: ProductSize) => void;
 };
+
+const productSizes: ProductSize[] = ["XS", "S", "M", "L", "XL"];
 
 const getProductPreview = (visual: Product["visual"]) => {
   if (visual === "terminal") {
@@ -21,7 +26,9 @@ const getProductPreview = (visual: Product["visual"]) => {
   return "bg-[linear-gradient(145deg,#101827_0%,#05070d_100%)]";
 };
 
-const ProductInfo = ({ product }: ProductInfoProps) => {
+const ProductInfo = ({ product, onAddToCart }: ProductInfoProps) => {
+  const [selectedSize, setSelectedSize] = useState<ProductSize>("M");
+
   return (
     <section className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-12 max-[900px]:grid-cols-1">
       <div className="border-2 border-[#32435f] bg-[#0b111f]">
@@ -73,7 +80,32 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
           <span className="font-bold text-[#00ff2a]">{product.quantity} szt.</span>
         </p>
 
-        <Button className="w-full">Dodaj do koszyka</Button>
+        <div className="grid gap-3">
+          <p className="font-bold text-[#f3f5f7]">
+            <span className="text-[#00ff2a]">&gt;</span> Rozmiar:{" "}
+            <span className="text-[#00ff2a]">{selectedSize}</span>
+          </p>
+          <div className="grid grid-cols-5 gap-3">
+            {productSizes.map((size) => (
+              <button
+                className={`min-h-12 border-2 font-bold transition ${
+                  selectedSize === size
+                    ? "border-[#00ff2a] bg-[#00ff2a] text-black"
+                    : "border-[#32435f] bg-black/20 text-[#f3f5f7] hover:border-[#00ff2a] hover:text-[#00ff2a]"
+                }`}
+                type="button"
+                key={size}
+                onClick={() => setSelectedSize(size)}
+              >
+                {size}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <Button className="w-full" onClick={() => onAddToCart(product, selectedSize)}>
+          Dodaj do koszyka
+        </Button>
       </div>
     </section>
   );

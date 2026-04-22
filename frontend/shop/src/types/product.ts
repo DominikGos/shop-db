@@ -23,10 +23,20 @@ export type BackendProduct = {
   name: string;
   price: number;
   quantity: number;
+  imagePath?: string;
 };
 
 export type ProductInput = {
   name: string;
   price: number;
+  quantity: number;
+  imageFile?: File | null;
+};
+
+export type ProductSize = "XS" | "S" | "M" | "L" | "XL";
+
+export type CartItem = {
+  product: Product;
+  size: ProductSize;
   quantity: number;
 };

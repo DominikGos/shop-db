@@ -1,10 +1,18 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import type { Product } from "../../types/product";
+import type { ProductSize } from "../../types/product";
 
 type ProductCardProps = {
   product: Product;
+  isDeleteMode?: boolean;
+  isSelected?: boolean;
+  onAddToCart: (product: Product, size: ProductSize) => void;
+  onToggleSelected?: () => void;
 };
+
+const productSizes: ProductSize[] = ["XS", "S", "M", "L", "XL"];
 
 const getProductBackground = (visual: Product["visual"]) => {
   if (visual === "terminal") {
@@ -42,25 +50,70 @@ const getProductBackground = (visual: Product["visual"]) => {
   return "bg-[linear-gradient(145deg,#071327_0%,#05070d_100%)]";
 };
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({
+  product,
+  isDeleteMode = false,
+  isSelected = false,
+  onAddToCart,
+  onToggleSelected,
+}: ProductCardProps) => {
   const navigate = useNavigate();
+  const [isSizePickerOpen, setIsSizePickerOpen] = useState(false);
 
-  const openProductPage = () => {
+  const handleCardClick = () => {
+    if (isDeleteMode) {
+      onToggleSelected?.();
+      return;
+    }
+
     navigate(`/products/${product.id}`);
+  };
+
+  const handleShowSizePicker = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setIsSizePickerOpen(true);
+  };
+
+  const handleSizeClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    size: ProductSize,
+  ) => {
+    event.stopPropagation();
+    onAddToCart(product, size);
+    setIsSizePickerOpen(false);
   };
 
   return (
     <article
-      className="group grid min-h-full cursor-pointer overflow-hidden border-2 border-[#32435f] bg-[#0d1526]/95 shadow-[0_18px_50px_rgba(0,0,0,0.24)] transition duration-200 hover:border-[#00ff2a] hover:shadow-[0_0_28px_rgba(0,255,42,0.28)]"
-      role="link"
+      className={`group relative grid min-h-full cursor-pointer overflow-hidden border-2 bg-[#0d1526]/95 shadow-[0_18px_50px_rgba(0,0,0,0.24)] transition duration-200 hover:border-[#00ff2a] hover:shadow-[0_0_28px_rgba(0,255,42,0.28)] ${
+        isSelected ? "border-[#00ff2a]" : "border-[#32435f]"
+      }`}
+      role={isDeleteMode ? "button" : "link"}
       tabIndex={0}
-      onClick={openProductPage}
+      aria-pressed={isDeleteMode ? isSelected : undefined}
+      onClick={handleCardClick}
       onKeyDown={(event) => {
-        if (event.key === "Enter") {
-          openProductPage();
+        if (event.key === "Enter" || (isDeleteMode && event.key === " ")) {
+          event.preventDefault();
+          handleCardClick();
         }
       }}
     >
+      {isDeleteMode ? (
+        <label
+          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center border-2 border-[#00ff2a] bg-black/90"
+          aria-label={`Zaznacz produkt ${product.name}`}
+          onClick={(event) => event.stopPropagation()}
+        >
+          <input
+            className="h-4 w-4 accent-[#00ff2a]"
+            type="checkbox"
+            checked={isSelected}
+            onChange={onToggleSelected}
+          />
+        </label>
+      ) : null}
+
       <div
         className={`relative min-h-[304px] overflow-hidden bg-[#0b111f] max-[700px]:min-h-[180px] max-[480px]:min-h-[135px] max-[360px]:min-h-[220px] ${getProductBackground(
           product.visual,
@@ -103,25 +156,48 @@ const ProductCard = ({ product }: ProductCardProps) => {
             PLN
           </small>
         </p>
-        <Button
-          className="w-full group-hover:bg-[#00ff2a] group-hover:text-black group-hover:shadow-[0_0_24px_rgba(0,255,42,0.28)] max-[700px]:min-h-11 max-[700px]:gap-2 max-[700px]:px-2 max-[700px]:py-2 max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:min-h-14 max-[360px]:text-base"
-          onClick={(event) => event.stopPropagation()}
-          icon={
-            <svg viewBox="0 0 24 24" fill="none">
-              <path
-                d="M3 5H5L7.4 15H17.2L20 8H8.2"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle cx="9" cy="19" r="1.5" fill="currentColor" />
-              <circle cx="17" cy="19" r="1.5" fill="currentColor" />
-            </svg>
-          }
-        >
-          Dodaj do koszyka
-        </Button>
+        {isSizePickerOpen ? (
+          <div
+            className="grid gap-3"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <p className="text-sm font-bold text-[#f3f5f7] max-[480px]:text-xs">
+              Wybierz rozmiar
+            </p>
+            <div className="grid grid-cols-5 gap-2">
+              {productSizes.map((size) => (
+                <button
+                  className="min-h-11 border-2 border-[#32435f] bg-black/20 text-sm font-bold text-[#f3f5f7] transition hover:border-[#00ff2a] hover:bg-[#00ff2a] hover:text-black max-[480px]:min-h-9 max-[480px]:text-[11px]"
+                  key={size}
+                  type="button"
+                  onClick={(event) => handleSizeClick(event, size)}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <Button
+            className="w-full group-hover:bg-[#00ff2a] group-hover:text-black group-hover:shadow-[0_0_24px_rgba(0,255,42,0.28)] max-[700px]:min-h-11 max-[700px]:gap-2 max-[700px]:px-2 max-[700px]:py-2 max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:min-h-14 max-[360px]:text-base"
+            onClick={handleShowSizePicker}
+            icon={
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M3 5H5L7.4 15H17.2L20 8H8.2"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle cx="9" cy="19" r="1.5" fill="currentColor" />
+                <circle cx="17" cy="19" r="1.5" fill="currentColor" />
+              </svg>
+            }
+          >
+            Dodaj do koszyka
+          </Button>
+        )}
       </div>
     </article>
   );

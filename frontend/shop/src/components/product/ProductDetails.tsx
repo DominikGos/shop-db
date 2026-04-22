@@ -15,14 +15,14 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         </p>
         <div className="grid gap-3 border-l-2 border-[#00ff2a]/40 pl-4">
           <p>
-            name: <span className="text-[#f3f5f7]">{product.name}</span>
+            nazwa: <span className="text-[#f3f5f7]">{product.name}</span>
           </p>
           <p>
-            price:{" "}
+            cena:{" "}
             <span className="text-[#f3f5f7]">{product.price.toFixed(2)} PLN</span>
           </p>
           <p>
-            quantity: <span className="text-[#f3f5f7]">{product.quantity}</span>
+            ilość: <span className="text-[#f3f5f7]">{product.quantity}</span>
           </p>
         </div>
       </div>
