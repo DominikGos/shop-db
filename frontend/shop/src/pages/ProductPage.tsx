@@ -4,12 +4,14 @@ import ProductDetails from "../components/product/ProductDetails";
 import ProductInfo from "../components/product/ProductInfo";
 import { fetchProductById } from "../services/productsApi";
 import type { Product } from "../types/product";
+import type { ProductSize } from "../types/product";
 
 type ProductPageProps = {
   products: Product[];
+  onAddToCart: (product: Product, size: ProductSize) => void;
 };
 
-const ProductPage = ({ products }: ProductPageProps) => {
+const ProductPage = ({ products, onAddToCart }: ProductPageProps) => {
   const { productId } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -66,7 +68,7 @@ const ProductPage = ({ products }: ProductPageProps) => {
   return (
     <main className="bg-[linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),#02040a] bg-[size:42px_42px]">
       <div className="mx-auto grid w-[calc(100%_-_32px)] max-w-[1440px] gap-16 py-20 max-[700px]:w-[calc(100%_-_20px)] max-[700px]:py-12">
-        <ProductInfo product={product} />
+        <ProductInfo product={product} onAddToCart={onAddToCart} />
         <ProductDetails product={product} />
       </div>
     </main>
