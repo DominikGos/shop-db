@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../ui/Button";
 import type { Product } from "../../types/product";
 import type { ProductSize } from "../../types/product";
+import { VAT_RATE } from "../../utils/vat";
 
 type ProductInfoProps = {
   product: Product;
@@ -68,12 +69,17 @@ const ProductInfo = ({ product, onAddToCart }: ProductInfoProps) => {
           {product.subtitle}
         </div>
 
-        <p className="flex items-baseline gap-4 text-[#00ff2a]">
-          <span className="text-5xl max-[520px]:text-4xl">
-            {product.price.toFixed(2)}
-          </span>
-          <span className="text-xl text-[#7f8aa3]">PLN</span>
-        </p>
+        <div className="grid gap-2">
+          <p className="flex items-baseline gap-4 text-[#00ff2a]">
+            <span className="text-5xl max-[520px]:text-4xl">
+              {product.price.toFixed(2)}
+            </span>
+            <span className="text-xl text-[#7f8aa3]">PLN</span>
+          </p>
+          <p className="text-sm text-[#93a0b8]">
+            Cena brutto, w tym VAT {Math.round(VAT_RATE * 100)}%
+          </p>
+        </div>
 
         <p className="text-lg text-[#f3f5f7]">
           <span className="text-[#00ff2a]">&gt;</span> Stan:{" "}
@@ -103,7 +109,10 @@ const ProductInfo = ({ product, onAddToCart }: ProductInfoProps) => {
           </div>
         </div>
 
-        <Button className="w-full" onClick={() => onAddToCart(product, selectedSize)}>
+        <Button
+          className="w-full"
+          onClick={() => onAddToCart(product, selectedSize)}
+        >
           Dodaj do koszyka
         </Button>
       </div>
