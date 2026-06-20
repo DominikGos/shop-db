@@ -38,7 +38,7 @@ const ProductsSection = ({
               Usuń wybrane produkty ({selectedProductIds.length})
             </button>
             <button
-              className="min-h-12 border-2 border-muted bg-black px-5 font-bold text-main transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+              className="min-h-12 border-2 border-[#7f8aa3] bg-black px-5 font-bold text-main transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
               type="button"
               onClick={onCancelDeleteMode}
             >

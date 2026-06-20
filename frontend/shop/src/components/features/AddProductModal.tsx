@@ -65,7 +65,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
       role="dialog"
       aria-modal="true"
     >
-      <div className="panel-accent-soft relative max-h-[90vh] w-[900px] max-w-full overflow-y-auto p-12 max-[700px]:px-5 max-[700px]:pb-6 max-[700px]:pt-9">
+      <div className="panel-accent relative max-h-[90vh] w-[900px] max-w-full overflow-y-auto p-12 max-[700px]:px-5 max-[700px]:pb-6 max-[700px]:pt-9">
         <button
           className="hover-text-accent text-muted absolute right-6 top-5 border-0 bg-transparent text-3xl"
           type="button"
@@ -82,7 +82,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
           <label className="text-main flex flex-col gap-2.5 font-bold">
             <span>Nazwa produktu</span>
             <input
-              className="field-accent placeholder-main min-h-16 w-full border-2 px-5 py-4"
+              className="field-accent min-h-16 w-full border-2 px-5 py-4 placeholder:text-[#f3f5f7]/45"
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
@@ -95,7 +95,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
             <span>Cena</span>
             <div className="field-accent flex items-center border-2">
               <input
-                className="text-main placeholder-main min-h-16 w-full border-0 bg-transparent px-5 py-4 outline-none"
+                className="text-main min-h-16 w-full border-0 bg-transparent px-5 py-4 outline-none placeholder:text-[#f3f5f7]/45"
                 type="number"
                 min="0"
                 step="0.01"
@@ -111,7 +111,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
           <label className="text-main flex flex-col gap-2.5 font-bold">
             <span>Ilość</span>
             <input
-              className="field-accent placeholder-main min-h-16 w-full border-2 px-5 py-4"
+              className="field-accent min-h-16 w-full border-2 px-5 py-4 placeholder:text-[#f3f5f7]/45"
               type="number"
               min="0"
               step="1"
@@ -156,7 +156,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
               Dodaj produkt
             </button>
             <button
-              className="btn-muted min-h-16 w-1/2 border-2 max-[700px]:w-full"
+              className="min-h-16 w-1/2 border-2 border-[#32435f] bg-transparent font-bold text-muted hover:border-[var(--color-muted)] hover:text-main max-[700px]:w-full"
               type="button"
               onClick={handleCancel}
             >

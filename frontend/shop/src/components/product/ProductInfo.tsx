@@ -94,8 +94,8 @@ const ProductInfo = ({ product, onAddToCart }: ProductInfoProps) => {
               <button
                 className={`min-h-12 border-2 font-bold transition ${
                   selectedSize === size
-                    ? "btn-accent-filled"
-                    : "choice-accent-outline"
+                    ? "border-[var(--color-accent)] bg-[var(--color-accent)] text-black"
+                    : "border-[#32435f] bg-black/20 text-main hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
                 }`}
                 type="button"
                 key={size}

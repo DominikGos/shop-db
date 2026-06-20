@@ -11,7 +11,7 @@ const SectionHeading = ({ eyebrow, title }: SectionHeadingProps) => {
         {title}
       </h2>
       <span
-        className="bg-accent h-1.5 w-28 shadow-[0_0_16px_rgba(0,255,42,0.25)]"
+        className="h-1.5 w-28 bg-[var(--color-accent)] shadow-[0_0_16px_rgba(0,255,42,0.25)]"
         aria-hidden="true"
       />
     </div>

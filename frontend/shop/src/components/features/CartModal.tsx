@@ -86,7 +86,7 @@ const CartModal = ({
               <div className="mt-10 grid gap-6">
                 {items.map((item) => (
                   <article
-                    className="border-accent-medium relative grid grid-cols-[170px_minmax(0,1fr)_220px] gap-8 border-2 bg-white/[0.03] p-5 max-[800px]:grid-cols-1"
+                    className="relative grid grid-cols-[170px_minmax(0,1fr)_220px] gap-8 border-2 border-[rgba(0,255,42,0.5)] bg-white/[0.03] p-5 max-[800px]:grid-cols-1"
                     key={`${item.product.id}-${item.size}`}
                   >
                     <button
@@ -131,7 +131,7 @@ const CartModal = ({
                     </div>
 
                     <div className="flex flex-col justify-center gap-5">
-                      <div className="text-accent border-accent-control grid grid-cols-3 border-2 text-center">
+                      <div className="text-accent grid grid-cols-3 border-2 border-[rgba(0,255,42,0.6)] text-center">
                         <button
                           className="quantity-button-accent min-h-12 text-2xl"
                           type="button"
@@ -173,7 +173,7 @@ const CartModal = ({
               </div>
             )}
 
-            <div className="border-accent-medium mt-8 border-t-2 pt-8">
+            <div className="mt-8 border-t-2 border-[rgba(0,255,42,0.5)] pt-8">
               <h3 className="text-main mb-3 text-xl font-bold">
                 Podsumowanie
               </h3>
@@ -201,7 +201,7 @@ const CartModal = ({
                 </p>
               </div>
 
-              <div className="text-accent border-muted-medium mt-7 flex items-center justify-between gap-4 border-t pt-7 text-2xl font-bold max-[520px]:grid">
+              <div className="text-accent mt-7 flex items-center justify-between gap-4 border-t border-[#7f8aa3]/60 pt-7 text-2xl font-bold max-[520px]:grid">
                 <span>Razem brutto</span>
                 <span>{totalGross.toFixed(2)} PLN</span>
               </div>

@@ -65,10 +65,10 @@ const SearchBar = ({ products }: SearchBarProps) => {
       </label>
 
       {showSuggestions ? (
-        <div className="suggestions-panel absolute left-0 right-0 top-full z-40 mt-2 grid">
+        <div className="absolute left-0 right-0 top-full z-40 mt-2 grid border-2 border-[rgba(0,255,42,0.7)] bg-black shadow-[0_18px_40px_rgba(0,0,0,0.55)]">
           {foundProducts.map((product) => (
             <button
-              className="suggestion-item grid min-h-20 grid-cols-[64px_minmax(0,1fr)] items-center gap-4 px-3 py-2 text-left"
+              className="grid min-h-20 grid-cols-[64px_minmax(0,1fr)] items-center gap-4 border-b border-[rgba(0,255,42,0.2)] px-3 py-2 text-left transition last:border-b-0 hover:bg-[rgba(0,255,42,0.1)]"
               key={product.id}
               type="button"
               onClick={() => openProduct(product.id)}

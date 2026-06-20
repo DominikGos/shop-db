@@ -130,7 +130,7 @@ const ProductCard = ({
         ) : null}
 
         {product.category ? (
-          <span className="text-accent border-accent-light absolute left-4 top-4 z-[2] border bg-black/30 px-3 py-1.5 text-sm uppercase tracking-[0.08em] max-[700px]:left-3 max-[700px]:top-3 max-[700px]:px-2 max-[700px]:py-1 max-[700px]:text-[11px] max-[480px]:text-[10px]">
+          <span className="text-accent absolute left-4 top-4 z-[2] border border-[rgba(0,255,42,0.45)] bg-black/30 px-3 py-1.5 text-sm uppercase tracking-[0.08em] max-[700px]:left-3 max-[700px]:top-3 max-[700px]:px-2 max-[700px]:py-1 max-[700px]:text-[11px] max-[480px]:text-[10px]">
             {product.category}
           </span>
         ) : null}
@@ -165,7 +165,7 @@ const ProductCard = ({
             <div className="grid grid-cols-5 gap-2">
               {PRODUCT_SIZES.map((size) => (
                 <button
-                  className="choice-accent min-h-11 border-2 text-sm max-[480px]:min-h-9 max-[480px]:text-[11px]"
+                  className="min-h-11 border-2 border-[#32435f] bg-black/20 text-sm font-bold text-main transition hover:border-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-black max-[480px]:min-h-9 max-[480px]:text-[11px]"
                   key={size}
                   type="button"
                   onClick={(event) => handleSizeClick(event, size)}
@@ -177,7 +177,7 @@ const ProductCard = ({
           </div>
         ) : (
           <Button
-            className="card-action-accent w-full max-[700px]:min-h-11 max-[700px]:gap-2 max-[700px]:px-2 max-[700px]:py-2 max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:min-h-14 max-[360px]:text-base"
+            className="w-full group-hover:bg-[var(--color-accent)] group-hover:text-black group-hover:shadow-[0_0_24px_rgba(0,255,42,0.28)] max-[700px]:min-h-11 max-[700px]:gap-2 max-[700px]:px-2 max-[700px]:py-2 max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:min-h-14 max-[360px]:text-base"
             onClick={handleShowSizePicker}
             icon={
               <svg viewBox="0 0 24 24" fill="none">

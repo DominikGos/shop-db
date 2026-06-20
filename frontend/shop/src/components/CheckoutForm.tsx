@@ -16,7 +16,7 @@ type CheckoutFormProps = {
 };
 
 const inputClassName =
-  "field-accent placeholder-muted min-h-12 w-full border px-4 py-3 transition";
+  "field-accent min-h-12 w-full border px-4 py-3 transition placeholder:text-[#5e687d]";
 
 const labelClassName =
   "text-secondary mb-2 block text-sm uppercase tracking-[0.14em]";
@@ -162,7 +162,7 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
 
   return (
     <div className="grid gap-8">
-      <div className="border-accent-faint flex items-start justify-between gap-4 border-b pb-5 max-[640px]:flex-col">
+      <div className="flex items-start justify-between gap-4 border-b border-[rgba(0,255,42,0.25)] pb-5 max-[640px]:flex-col">
         <div>
           <p className="text-accent-soft font-mono text-3xl">
             // Rozliczenia i wysyłka
@@ -177,7 +177,7 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
       </div>
 
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="border-accent-faint grid gap-5 border bg-black/20 p-5 sm:p-6">
+        <div className="grid gap-5 border border-[rgba(0,255,42,0.25)] bg-black/20 p-5 sm:p-6">
           <div className="grid gap-5 md:grid-cols-2">
             {renderField("firstName", "Imię", true)}
             {renderField("lastName", "Nazwisko", true)}
@@ -209,12 +209,12 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
           })}
         </div>
 
-        <aside className="border-accent-faint h-fit border bg-[linear-gradient(180deg,rgba(8,17,27,0.96),rgba(3,8,14,0.92))] p-5 sm:p-6">
+        <aside className="h-fit border border-[rgba(0,255,42,0.25)] bg-[linear-gradient(180deg,rgba(8,17,27,0.96),rgba(3,8,14,0.92))] p-5 sm:p-6">
           <p className="text-accent-soft font-mono text-lg">// Podsumowanie</p>
           <div className="text-secondary mt-5 grid gap-4 text-sm">
             {items.map((item) => (
               <div
-                className="border-accent-hairline border bg-white/[0.02] p-3"
+                className="border border-[rgba(0,255,42,0.15)] bg-white/[0.02] p-3"
                 key={`${item.product.name}-${item.size}`}
               >
                 <p className="text-main font-semibold">{item.product.name}</p>
@@ -228,7 +228,7 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
             ))}
           </div>
 
-          <div className="text-secondary border-accent-subtle mt-6 grid gap-3 border-t pt-5 text-sm">
+          <div className="text-secondary mt-6 grid gap-3 border-t border-[rgba(0,255,42,0.2)] pt-5 text-sm">
             <p className="flex justify-between gap-4">
               <span>Suma częściowa</span>
               <span>{subtotal.toFixed(2)} PLN</span>

@@ -82,7 +82,7 @@ const Header = ({
                       Dodaj produkty
                     </button>
                     <button
-                      className="menu-item-accent menu-separator flex min-h-12 items-center gap-3 border-t px-4 text-left"
+                      className="menu-item-accent flex min-h-12 items-center gap-3 border-t border-[rgba(0,255,42,0.4)] px-4 text-left"
                       type="button"
                       role="menuitem"
                       onClick={handleDeleteModeClick}

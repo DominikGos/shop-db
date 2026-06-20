@@ -11,6 +11,9 @@ type ProductPageProps = {
   onAddToCart: (product: Product, size: ProductSize) => void;
 };
 
+const pageBackgroundClass =
+  "bg-[linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),#02040a] bg-[size:42px_42px]";
+
 const ProductPage = ({ products, onAddToCart }: ProductPageProps) => {
   const { productId } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
@@ -41,7 +44,7 @@ const ProductPage = ({ products, onAddToCart }: ProductPageProps) => {
 
   if (isLoading) {
     return (
-      <main className="min-h-[70vh] bg-[linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),#02040a] bg-[size:42px_42px] px-5 py-20">
+      <main className={`${pageBackgroundClass} min-h-[70vh] px-5 py-20`}>
         <div className="text-accent border-panel mx-auto max-w-[900px] border-2 bg-black/40 p-10 text-center">
           // loading product...
         </div>
@@ -51,7 +54,7 @@ const ProductPage = ({ products, onAddToCart }: ProductPageProps) => {
 
   if (!product) {
     return (
-      <main className="min-h-[70vh] bg-[linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),#02040a] bg-[size:42px_42px] px-5 py-20">
+      <main className={`${pageBackgroundClass} min-h-[70vh] px-5 py-20`}>
         <div className="border-panel mx-auto max-w-[900px] border-2 bg-black/40 p-10 text-center">
           <p className="text-purple mb-4">// product.not_found</p>
           <h1 className="text-main mb-8 text-4xl font-bold">
@@ -66,7 +69,7 @@ const ProductPage = ({ products, onAddToCart }: ProductPageProps) => {
   }
 
   return (
-    <main className="bg-[linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),#02040a] bg-[size:42px_42px]">
+    <main className={pageBackgroundClass}>
       <div className="mx-auto grid max-w-[1440px] gap-16 px-4 py-20 max-[700px]:px-2.5 max-[700px]:py-12">
         <ProductInfo product={product} onAddToCart={onAddToCart} />
         <ProductDetails product={product} />

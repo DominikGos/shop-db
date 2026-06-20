@@ -69,10 +69,6 @@ input {
   color: var(--color-text);
 }
 
-.focus-main:focus-visible {
-  outline-color: var(--color-text);
-}
-
 .border-accent {
   border-color: var(--color-accent);
 }
@@ -81,44 +77,13 @@ input {
   border-color: var(--color-panel-border);
 }
 
-.border-muted {
-  border-color: var(--color-muted);
-}
-
-.border-muted-light {
-  border-color: rgba(127, 138, 163, 0.4);
-}
-
-.border-muted-medium {
-  border-color: rgba(127, 138, 163, 0.6);
-}
-
-.border-accent-faint {
-  border-color: rgba(0, 255, 42, 0.25);
-}
-
-.border-accent-subtle {
-  border-color: rgba(0, 255, 42, 0.2);
-}
-
-.border-accent-hairline {
-  border-color: rgba(0, 255, 42, 0.15);
-}
-
-.border-accent-light {
-  border-color: rgba(0, 255, 42, 0.4);
-}
-
-.border-accent-medium {
-  border-color: rgba(0, 255, 42, 0.5);
-}
-
-.border-accent-control {
-  border-color: rgba(0, 255, 42, 0.6);
-}
-
-.bg-accent {
-  background-color: var(--color-accent);
+.hero-background {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(42, 67, 118, 0.42), transparent 30%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(120deg, #010101 0%, #070d18 45%, #0d1630 100%);
+  background-size: auto, 42px 42px, 42px 42px, auto;
 }
 
 .btn-accent {
@@ -139,13 +104,6 @@ input {
   box-shadow: 0 0 24px rgba(0, 255, 42, 0.16);
 }
 
-.btn-accent-filled {
-  border-color: var(--color-accent);
-  background-color: var(--color-accent);
-  color: #000000;
-  font-weight: 700;
-}
-
 .btn-accent-subtle {
   border-color: var(--color-accent);
   color: var(--color-accent-soft);
@@ -160,37 +118,10 @@ input {
   background-color: rgba(0, 255, 42, 0.1);
 }
 
-.btn-muted {
-  border-color: var(--color-panel-border);
-  background-color: transparent;
-  color: var(--color-muted);
-  font-weight: 700;
-  transition:
-    border-color 0.2s,
-    color 0.2s;
-}
-
-.btn-muted:hover {
-  border-color: var(--color-muted);
-  color: var(--color-text);
-}
-
 .panel-accent {
   border: 2px solid rgba(0, 255, 42, 0.6);
   background-color: rgba(3, 8, 14, 0.95);
   box-shadow: 0 0 50px rgba(0, 255, 42, 0.12);
-}
-
-.panel-accent-soft {
-  border: 2px solid rgba(0, 255, 42, 0.4);
-  background-color: rgba(3, 8, 14, 0.95);
-  box-shadow: 0 0 50px rgba(0, 255, 42, 0.12);
-}
-
-.panel-accent-strong {
-  border: 2px solid var(--color-accent);
-  background-color: #03080e;
-  box-shadow: 0 0 50px rgba(0, 255, 42, 0.18);
 }
 
 .menu-panel-accent {
@@ -212,10 +143,6 @@ input {
   color: #000000;
 }
 
-.menu-separator {
-  border-color: rgba(0, 255, 42, 0.4);
-}
-
 .badge-accent {
   background-color: var(--color-accent);
   color: #000000;
@@ -233,25 +160,6 @@ input {
 
 .footer-link:hover {
   color: var(--color-text);
-}
-
-.suggestions-panel {
-  border: 2px solid rgba(0, 255, 42, 0.7);
-  background-color: #000000;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
-}
-
-.suggestion-item {
-  border-bottom: 1px solid rgba(0, 255, 42, 0.2);
-  transition: background-color 0.2s;
-}
-
-.suggestion-item:hover {
-  background-color: rgba(0, 255, 42, 0.1);
-}
-
-.suggestion-item:last-child {
-  border-bottom: 0;
 }
 
 .quantity-button-accent {
@@ -282,65 +190,4 @@ input {
 .field-error:focus {
   border-color: #ff4d6d;
   box-shadow: 0 0 0 1px rgba(255, 77, 109, 0.35);
-}
-
-.placeholder-main::placeholder {
-  color: rgba(243, 245, 247, 0.45);
-}
-
-.placeholder-muted::placeholder {
-  color: #5e687d;
-}
-
-.decor-purple-border {
-  border-color: rgba(109, 43, 189, 0.45);
-}
-
-.decor-purple-bg {
-  background-color: rgba(109, 43, 189, 0.45);
-}
-
-.choice-accent {
-  border-color: var(--color-panel-border);
-  background-color: rgba(0, 0, 0, 0.2);
-  color: var(--color-text);
-  font-weight: 700;
-  transition:
-    background-color 0.2s,
-    border-color 0.2s,
-    color 0.2s;
-}
-
-.choice-accent:hover {
-  border-color: var(--color-accent);
-  background-color: var(--color-accent);
-  color: #000000;
-}
-
-.choice-accent-outline {
-  border-color: var(--color-panel-border);
-  background-color: rgba(0, 0, 0, 0.2);
-  color: var(--color-text);
-  font-weight: 700;
-  transition:
-    border-color 0.2s,
-    color 0.2s;
-}
-
-.choice-accent-outline:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-}
-
-.card-action-accent {
-  transition:
-    background-color 0.2s,
-    color 0.2s,
-    box-shadow 0.2s;
-}
-
-.group:hover .card-action-accent {
-  background-color: var(--color-accent);
-  color: #000000;
-  box-shadow: 0 0 24px rgba(0, 255, 42, 0.28);
 }
