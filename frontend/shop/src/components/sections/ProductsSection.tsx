@@ -24,7 +24,7 @@ const ProductsSection = ({
 }: ProductsSectionProps) => {
   return (
     <section className="bg-black py-[88px] max-[700px]:py-16" id="products">
-      <div className="mx-auto grid w-[calc(100%_-_32px)] max-w-[1440px] gap-14 max-[700px]:w-[calc(100%_-_20px)] max-[700px]:gap-10">
+      <div className="mx-auto grid max-w-[1440px] gap-14 px-4 max-[700px]:gap-10 max-[700px]:px-2.5">
         <SectionHeading eyebrow="// Browse collection" title="Produkty" />
 
         {isDeleteMode ? (
@@ -38,7 +38,7 @@ const ProductsSection = ({
               Usuń wybrane produkty ({selectedProductIds.length})
             </button>
             <button
-              className="min-h-12 border-2 border-[#7f8aa3] bg-black px-5 font-bold text-[#f3f5f7] transition hover:border-[#00ff2a] hover:text-[#00ff2a]"
+              className="min-h-12 border-2 border-muted bg-black px-5 font-bold text-main transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
               type="button"
               onClick={onCancelDeleteMode}
             >

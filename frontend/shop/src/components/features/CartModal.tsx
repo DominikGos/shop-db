@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import CheckoutForm from "../CheckoutForm";
 import type { CartItem, ProductSize } from "../../types/product";
 import {
-  DELIVERY_GROSS,
+  SHIPPING_COST,
   VAT_RATE,
   getNetFromGross,
   getVatFromGross,
@@ -28,12 +28,7 @@ const CartModal = ({
   onUpdateQuantity,
 }: CartModalProps) => {
   const [view, setView] = useState<"cart" | "checkout">("cart");
-
-  useEffect(() => {
-    if (items.length === 0) {
-      setView("cart");
-    }
-  }, [items.length]);
+  const currentView = items.length === 0 ? "cart" : view;
 
   const subtotalGross = useMemo(
     () =>
@@ -45,7 +40,7 @@ const CartModal = ({
   );
   const subtotalNet = getNetFromGross(subtotalGross);
   const subtotalVat = getVatFromGross(subtotalGross);
-  const deliveryGross = items.length > 0 ? DELIVERY_GROSS : 0;
+  const deliveryGross = items.length > 0 ? SHIPPING_COST : 0;
   const deliveryNet = getNetFromGross(deliveryGross);
   const deliveryVat = getVatFromGross(deliveryGross);
   const totalGross = subtotalGross + deliveryGross;
@@ -58,11 +53,11 @@ const CartModal = ({
       onClick={onClose}
     >
       <div
-        className="relative max-h-[90vh] w-[980px] max-w-full overflow-y-auto border-2 border-[#00ff2a]/60 bg-[#03080e]/95 p-12 shadow-[0_0_50px_rgba(0,255,42,0.12)] max-[700px]:px-5 max-[700px]:pb-6 max-[700px]:pt-9"
+        className="panel-accent relative max-h-[90vh] w-[980px] max-w-full overflow-y-auto p-12 max-[700px]:px-5 max-[700px]:pb-6 max-[700px]:pt-9"
         onClick={(event) => event.stopPropagation()}
       >
         <button
-          className="absolute right-6 top-5 border-0 bg-transparent text-3xl text-[#7f8aa3] hover:text-[#00ff2a]"
+          className="hover-text-accent text-muted absolute right-6 top-5 border-0 bg-transparent text-3xl"
           type="button"
           onClick={onClose}
           aria-label="Zamknij koszyk"
@@ -70,7 +65,7 @@ const CartModal = ({
           x
         </button>
 
-        {view === "checkout" ? (
+        {currentView === "checkout" ? (
           <CheckoutForm
             items={items}
             onBack={() => setView("cart")}
@@ -78,27 +73,27 @@ const CartModal = ({
           />
         ) : (
           <>
-            <p className="text-3xl text-[#22ff88]">// Twoj koszyk</p>
-            <h2 className="mt-2 text-lg text-[#b0b7c8]">
-              Sprawdz wybrane produkty
+            <p className="text-accent-soft text-3xl">// Twój koszyk</p>
+            <h2 className="text-secondary mt-2 text-lg">
+              Sprawdź wybrane produkty
             </h2>
 
             {items.length === 0 ? (
-              <p className="mt-10 border-2 border-[#32435f] bg-black/20 p-8 text-center text-[#7f8aa3]">
+              <p className="text-muted border-panel mt-10 border-2 bg-black/20 p-8 text-center">
                 Koszyk jest pusty.
               </p>
             ) : (
               <div className="mt-10 grid gap-6">
                 {items.map((item) => (
                   <article
-                    className="relative grid grid-cols-[170px_minmax(0,1fr)_220px] gap-8 border-2 border-[#00ff2a]/50 bg-white/[0.03] p-5 max-[800px]:grid-cols-1"
+                    className="border-accent-medium relative grid grid-cols-[170px_minmax(0,1fr)_220px] gap-8 border-2 bg-white/[0.03] p-5 max-[800px]:grid-cols-1"
                     key={`${item.product.id}-${item.size}`}
                   >
                     <button
-                      className="absolute right-5 top-4 text-2xl text-[#b0b7c8] hover:text-[#00ff2a]"
+                      className="hover-text-accent text-secondary absolute right-5 top-4 text-2xl"
                       type="button"
                       onClick={() => onRemoveItem(item.product.id, item.size)}
-                      aria-label={`Usun ${item.product.name} z koszyka`}
+                      aria-label={`Usuń ${item.product.name} z koszyka`}
                     >
                       x
                     </button>
@@ -111,34 +106,34 @@ const CartModal = ({
                           alt={item.product.name}
                         />
                       ) : (
-                        <div className="absolute inset-0 grid place-items-center bg-[linear-gradient(145deg,#1b2230,#0b0f16)] text-sm font-bold text-[#00ff2a]">
+                        <div className="text-accent absolute inset-0 grid place-items-center bg-[linear-gradient(145deg,#1b2230,#0b0f16)] text-sm font-bold">
                           PoliWear
                         </div>
                       )}
                     </div>
 
                     <div className="flex flex-col justify-center gap-4 pr-8 max-[800px]:pr-0">
-                      <h3 className="text-2xl font-bold text-[#f3f5f7]">
+                      <h3 className="text-main text-2xl font-bold">
                         {item.product.name}
                       </h3>
                       <div>
-                        <p className="text-xl font-bold text-[#00ff2a]">
+                        <p className="text-accent text-xl font-bold">
                           {item.product.price.toFixed(2)} PLN
                         </p>
-                        <p className="mt-1 text-sm text-[#93a0b8]">
+                        <p className="text-secondary mt-1 text-sm">
                           Cena brutto, w tym VAT {Math.round(VAT_RATE * 100)}%
                         </p>
                       </div>
-                      <p className="text-[#b0b7c8]">
-                        Ilosc: {item.quantity} <span className="px-4">|</span>
+                      <p className="text-secondary">
+                        Ilość: {item.quantity} <span className="px-4">|</span>
                         Rozmiar: {item.size}
                       </p>
                     </div>
 
                     <div className="flex flex-col justify-center gap-5">
-                      <div className="grid grid-cols-3 border-2 border-[#00ff2a]/60 text-center text-[#00ff2a]">
+                      <div className="text-accent border-accent-control grid grid-cols-3 border-2 text-center">
                         <button
-                          className="min-h-12 text-2xl font-bold hover:bg-[#00ff2a] hover:text-black"
+                          className="quantity-button-accent min-h-12 text-2xl"
                           type="button"
                           onClick={() =>
                             onUpdateQuantity(
@@ -147,7 +142,7 @@ const CartModal = ({
                               item.quantity - 1,
                             )
                           }
-                          aria-label="Zmniejsz ilosc"
+                          aria-label="Zmniejsz ilość"
                         >
                           -
                         </button>
@@ -155,7 +150,7 @@ const CartModal = ({
                           {item.quantity}
                         </span>
                         <button
-                          className="min-h-12 text-2xl font-bold hover:bg-[#00ff2a] hover:text-black"
+                          className="quantity-button-accent min-h-12 text-2xl"
                           type="button"
                           onClick={() =>
                             onUpdateQuantity(
@@ -164,12 +159,12 @@ const CartModal = ({
                               item.quantity + 1,
                             )
                           }
-                          aria-label="Zwiekksz ilosc"
+                          aria-label="Zwiększ ilość"
                         >
                           +
                         </button>
                       </div>
-                      <p className="text-right text-xl font-bold text-[#00ff2a] max-[800px]:text-left">
+                      <p className="text-accent text-right text-xl font-bold max-[800px]:text-left">
                         {(item.product.price * item.quantity).toFixed(2)} PLN
                       </p>
                     </div>
@@ -178,14 +173,14 @@ const CartModal = ({
               </div>
             )}
 
-            <div className="mt-8 border-t-2 border-[#00ff2a]/50 pt-8">
-              <h3 className="mb-3 text-xl font-bold text-[#f3f5f7]">
+            <div className="border-accent-medium mt-8 border-t-2 pt-8">
+              <h3 className="text-main mb-3 text-xl font-bold">
                 Podsumowanie
               </h3>
-              <p className="mb-6 text-sm text-[#93a0b8]">
-                Ceny zawieraja VAT {Math.round(VAT_RATE * 100)}%.
+              <p className="text-secondary mb-6 text-sm">
+                Ceny zawierają VAT {Math.round(VAT_RATE * 100)}%.
               </p>
-              <div className="grid gap-4 text-[#b0b7c8]">
+              <div className="text-secondary grid gap-4">
                 <p className="flex justify-between gap-4">
                   <span>Suma netto</span>
                   <span>{subtotalNet.toFixed(2)} PLN</span>
@@ -198,7 +193,7 @@ const CartModal = ({
                   <span>Dostawa brutto</span>
                   <span>{deliveryGross.toFixed(2)} PLN</span>
                 </p>
-                <p className="flex justify-between gap-4 text-sm text-[#7f8aa3]">
+                <p className="text-muted flex justify-between gap-4 text-sm">
                   <span>Dostawa netto / VAT</span>
                   <span>
                     {deliveryNet.toFixed(2)} PLN / {deliveryVat.toFixed(2)} PLN
@@ -206,13 +201,13 @@ const CartModal = ({
                 </p>
               </div>
 
-              <div className="mt-7 flex items-center justify-between gap-4 border-t border-[#7f8aa3]/60 pt-7 text-2xl font-bold text-[#00ff2a] max-[520px]:grid">
+              <div className="text-accent border-muted-medium mt-7 flex items-center justify-between gap-4 border-t pt-7 text-2xl font-bold max-[520px]:grid">
                 <span>Razem brutto</span>
                 <span>{totalGross.toFixed(2)} PLN</span>
               </div>
 
               <button
-                className="mt-8 flex min-h-16 w-full items-center justify-center gap-4 border-2 border-[#00ff2a] bg-transparent font-bold text-[#22ff88] transition hover:bg-[#00ff2a]/10 disabled:cursor-not-allowed disabled:opacity-45"
+                className="btn-accent-subtle mt-8 flex min-h-16 w-full items-center justify-center gap-4 border-2 bg-transparent disabled:cursor-not-allowed disabled:opacity-45"
                 type="button"
                 disabled={items.length === 0}
                 onClick={() => setView("checkout")}

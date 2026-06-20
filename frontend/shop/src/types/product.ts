@@ -1,3 +1,7 @@
+export const PRODUCT_SIZES = ["XS", "S", "M", "L", "XL"] as const;
+
+export type ProductSize = (typeof PRODUCT_SIZES)[number];
+
 export type Product = {
   id: string;
   name: string;
@@ -32,8 +36,6 @@ export type ProductInput = {
   quantity: number;
   imageFile?: File | null;
 };
-
-export type ProductSize = "XS" | "S" | "M" | "L" | "XL";
 
 export type CartItem = {
   product: Product;

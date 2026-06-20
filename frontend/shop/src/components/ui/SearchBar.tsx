@@ -35,10 +35,10 @@ const SearchBar = ({ products }: SearchBarProps) => {
     <div className="relative w-[520px] max-w-full max-[900px]:w-full">
       <label
         className="flex min-h-14 w-full items-center gap-4 border-2 border-[#576c92] bg-[#07101e] px-4 max-[480px]:min-h-11 max-[480px]:gap-3 max-[480px]:px-3"
-        aria-label="Szukaj produktow"
+        aria-label="Szukaj produktów"
       >
         <span
-          className="h-6 w-6 shrink-0 text-[#00ff2a] max-[480px]:h-5 max-[480px]:w-5"
+          className="text-accent h-6 w-6 shrink-0 max-[480px]:h-5 max-[480px]:w-5"
           aria-hidden="true"
         >
           <svg viewBox="0 0 24 24" fill="none">
@@ -52,7 +52,7 @@ const SearchBar = ({ products }: SearchBarProps) => {
           </svg>
         </span>
         <input
-          className="w-full min-w-0 border-0 bg-transparent text-white outline-none placeholder:text-[#7f8aa3] max-[480px]:text-sm max-[480px]:placeholder:text-xs"
+          className="w-full min-w-0 border-0 bg-transparent text-white outline-none placeholder:text-[var(--color-muted)] max-[480px]:text-sm max-[480px]:placeholder:text-xs"
           type="search"
           value={query}
           onBlur={() => {
@@ -65,15 +65,15 @@ const SearchBar = ({ products }: SearchBarProps) => {
       </label>
 
       {showSuggestions ? (
-        <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-40 grid border-2 border-[#00ff2a]/70 bg-black shadow-[0_18px_40px_rgba(0,0,0,0.55)]">
+        <div className="suggestions-panel absolute left-0 right-0 top-full z-40 mt-2 grid">
           {foundProducts.map((product) => (
             <button
-              className="grid min-h-20 grid-cols-[64px_minmax(0,1fr)] items-center gap-4 border-b border-[#00ff2a]/20 px-3 py-2 text-left transition last:border-b-0 hover:bg-[#00ff2a]/10"
+              className="suggestion-item grid min-h-20 grid-cols-[64px_minmax(0,1fr)] items-center gap-4 px-3 py-2 text-left"
               key={product.id}
               type="button"
               onClick={() => openProduct(product.id)}
             >
-              <span className="relative h-14 w-16 overflow-hidden border border-[#32435f] bg-[#111827]">
+              <span className="border-panel relative h-14 w-16 overflow-hidden border bg-[#111827]">
                 {product.imageUrl ? (
                   <img
                     className="absolute inset-0 h-full w-full object-cover"
@@ -81,16 +81,16 @@ const SearchBar = ({ products }: SearchBarProps) => {
                     alt=""
                   />
                 ) : (
-                  <span className="grid h-full place-items-center text-xs font-bold text-[#00ff2a]">
+                    <span className="text-accent grid h-full place-items-center text-xs font-bold">
                     PW
                   </span>
                 )}
               </span>
               <span className="grid min-w-0 gap-1">
-                <span className="truncate font-bold text-[#f3f5f7]">
+                <span className="text-main truncate font-bold">
                   {product.name}
                 </span>
-                <span className="text-sm font-bold text-[#00ff2a]">
+                <span className="text-accent text-sm font-bold">
                   {product.price.toFixed(2)} PLN
                 </span>
               </span>

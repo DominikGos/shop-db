@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
-import type { Product } from "../../types/product";
+import { PRODUCT_SIZES, type Product } from "../../types/product";
 import type { ProductSize } from "../../types/product";
 
 type ProductCardProps = {
@@ -11,8 +11,6 @@ type ProductCardProps = {
   onAddToCart: (product: Product, size: ProductSize) => void;
   onToggleSelected?: () => void;
 };
-
-const productSizes: ProductSize[] = ["XS", "S", "M", "L", "XL"];
 
 const getProductBackground = (visual: Product["visual"]) => {
   if (visual === "terminal") {
@@ -85,8 +83,8 @@ const ProductCard = ({
 
   return (
     <article
-      className={`group relative grid min-h-full cursor-pointer overflow-hidden border-2 bg-[#0d1526]/95 shadow-[0_18px_50px_rgba(0,0,0,0.24)] transition duration-200 hover:border-[#00ff2a] hover:shadow-[0_0_28px_rgba(0,255,42,0.28)] ${
-        isSelected ? "border-[#00ff2a]" : "border-[#32435f]"
+      className={`group relative grid min-h-full cursor-pointer overflow-hidden border-2 bg-[#0d1526]/95 shadow-[0_18px_50px_rgba(0,0,0,0.24)] transition duration-200 hover:border-[var(--color-accent)] hover:shadow-[0_0_28px_rgba(0,255,42,0.28)] ${
+        isSelected ? "border-accent" : "border-panel"
       }`}
       role={isDeleteMode ? "button" : "link"}
       tabIndex={0}
@@ -101,12 +99,12 @@ const ProductCard = ({
     >
       {isDeleteMode ? (
         <label
-          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center border-2 border-[#00ff2a] bg-black/90"
+          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center border-2 border-accent bg-black/90"
           aria-label={`Zaznacz produkt ${product.name}`}
           onClick={(event) => event.stopPropagation()}
         >
           <input
-            className="h-4 w-4 accent-[#00ff2a]"
+            className="h-4 w-4 accent-[var(--color-accent)]"
             type="checkbox"
             checked={isSelected}
             onChange={onToggleSelected}
@@ -132,27 +130,27 @@ const ProductCard = ({
         ) : null}
 
         {product.category ? (
-          <span className="absolute left-4 top-4 z-[2] border border-[#00ff2a]/45 bg-black/30 px-3 py-1.5 text-[14px] uppercase tracking-[0.08em] text-[#00ff2a] max-[700px]:left-3 max-[700px]:top-3 max-[700px]:px-2 max-[700px]:py-1 max-[700px]:text-[11px] max-[480px]:text-[10px]">
+          <span className="text-accent border-accent-light absolute left-4 top-4 z-[2] border bg-black/30 px-3 py-1.5 text-sm uppercase tracking-[0.08em] max-[700px]:left-3 max-[700px]:top-3 max-[700px]:px-2 max-[700px]:py-1 max-[700px]:text-[11px] max-[480px]:text-[10px]">
             {product.category}
           </span>
         ) : null}
       </div>
 
       <div className="grid gap-5 p-6 max-[700px]:gap-3 max-[700px]:p-4 max-[480px]:gap-2 max-[480px]:p-3 max-[360px]:gap-4 max-[360px]:p-5">
-        <p className="text-base text-[#6d2bbd] max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:text-base">
+        <p className="text-purple text-base max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:text-base">
           {product.subtitle}
         </p>
         <h3 className="text-[clamp(22px,7vw,30px)] leading-[1.35] max-[700px]:text-lg max-[480px]:text-base max-[360px]:text-2xl">
           {product.name}
         </h3>
-        <p className="text-[15px] text-[#7f8aa3] max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:text-sm">
+        <p className="text-muted text-[15px] max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:text-sm">
           Stan: {product.quantity} szt.
         </p>
-        <p className="inline-flex items-baseline gap-3 text-[#00ff2a] max-[700px]:gap-2">
+        <p className="text-accent inline-flex items-baseline gap-3 max-[700px]:gap-2">
           <span className="text-3xl font-bold max-[700px]:text-2xl max-[480px]:text-xl max-[360px]:text-3xl">
             {product.price.toFixed(2)}
           </span>
-          <small className="text-[17px] text-[#7f8aa3] max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:text-base">
+          <small className="text-muted text-[17px] max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:text-base">
             PLN
           </small>
         </p>
@@ -161,13 +159,13 @@ const ProductCard = ({
             className="grid gap-3"
             onClick={(event) => event.stopPropagation()}
           >
-            <p className="text-sm font-bold text-[#f3f5f7] max-[480px]:text-xs">
+            <p className="text-main text-sm font-bold max-[480px]:text-xs">
               Wybierz rozmiar
             </p>
             <div className="grid grid-cols-5 gap-2">
-              {productSizes.map((size) => (
+              {PRODUCT_SIZES.map((size) => (
                 <button
-                  className="min-h-11 border-2 border-[#32435f] bg-black/20 text-sm font-bold text-[#f3f5f7] transition hover:border-[#00ff2a] hover:bg-[#00ff2a] hover:text-black max-[480px]:min-h-9 max-[480px]:text-[11px]"
+                  className="choice-accent min-h-11 border-2 text-sm max-[480px]:min-h-9 max-[480px]:text-[11px]"
                   key={size}
                   type="button"
                   onClick={(event) => handleSizeClick(event, size)}
@@ -179,7 +177,7 @@ const ProductCard = ({
           </div>
         ) : (
           <Button
-            className="w-full group-hover:bg-[#00ff2a] group-hover:text-black group-hover:shadow-[0_0_24px_rgba(0,255,42,0.28)] max-[700px]:min-h-11 max-[700px]:gap-2 max-[700px]:px-2 max-[700px]:py-2 max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:min-h-14 max-[360px]:text-base"
+            className="card-action-accent w-full max-[700px]:min-h-11 max-[700px]:gap-2 max-[700px]:px-2 max-[700px]:py-2 max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:min-h-14 max-[360px]:text-base"
             onClick={handleShowSizePicker}
             icon={
               <svg viewBox="0 0 24 24" fill="none">

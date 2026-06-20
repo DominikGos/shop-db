@@ -1,16 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 type NavLinkProps = {
   label: string;
   to: string;
-  active?: boolean;
 };
 
-const NavLink = ({ label, to, active = false }: NavLinkProps) => {
+const NavLink = ({ label, to }: NavLinkProps) => {
+  const location = useLocation();
+  const [path, hash = ""] = to.split("#");
+  const isActive =
+    location.pathname === path &&
+    (hash ? location.hash === `#${hash}` : location.hash === "");
+
   return (
     <Link
-      className={`inline-flex items-center gap-2 text-[17px] transition-colors hover:text-[#00ff2a] max-[480px]:gap-1.5 max-[480px]:text-sm ${
-        active ? "text-[#00ff2a]" : "text-[#7f8aa3]"
+      className={`inline-flex items-center gap-2 text-[17px] transition-colors hover:text-[var(--color-accent)] max-[480px]:gap-1.5 max-[480px]:text-sm ${
+        isActive ? "text-accent" : "text-muted"
       }`}
       to={to}
     >
