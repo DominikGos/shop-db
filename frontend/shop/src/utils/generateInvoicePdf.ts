@@ -1,6 +1,12 @@
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import type { CheckoutFormData, InvoiceCartItem } from "../types/checkout";
+import {
+  SHIPPING_COST,
+  getNetFromGross,
+  getVatFromGross,
+  roundCurrency,
+} from "./vat";
 
 const sellerDetails = [
   "PoliWear",
@@ -10,13 +16,7 @@ const sellerDetails = [
   "E-mail: kontakt@poliwear.pl",
 ];
 
-const deliveryPrice = 19.99;
-const vatRate = 0.23;
-
-const roundCurrency = (value: number) => Math.round(value * 100) / 100;
 const formatCurrency = (value: number) => `${roundCurrency(value).toFixed(2)} PLN`;
-const getNetValue = (grossValue: number) => roundCurrency(grossValue / (1 + vatRate));
-const getVatValue = (grossValue: number) => roundCurrency(grossValue - getNetValue(grossValue));
 
 const generateInvoiceNumber = () => {
   const now = new Date();
@@ -101,8 +101,8 @@ export const generateInvoicePdf = async (
 
   const invoiceRows = items.map((item) => {
     const grossUnit = roundCurrency(item.product.price);
-    const netUnit = getNetValue(grossUnit);
-    const vatUnit = getVatValue(grossUnit);
+    const netUnit = getNetFromGross(grossUnit);
+    const vatUnit = getVatFromGross(grossUnit);
     const grossTotal = roundCurrency(grossUnit * item.quantity);
 
     return {
@@ -122,9 +122,9 @@ export const generateInvoicePdf = async (
   );
   const productVat = roundCurrency(productGross - productNet);
 
-  const deliveryGross = items.length > 0 ? deliveryPrice : 0;
-  const deliveryNet = getNetValue(deliveryGross);
-  const deliveryVat = getVatValue(deliveryGross);
+  const deliveryGross = items.length > 0 ? SHIPPING_COST : 0;
+  const deliveryNet = getNetFromGross(deliveryGross);
+  const deliveryVat = getVatFromGross(deliveryGross);
   const totalGross = roundCurrency(productGross + deliveryGross);
 
   const thumbnails = await Promise.all(
@@ -170,14 +170,14 @@ export const generateInvoicePdf = async (
     head: [
       [
         "Lp.",
-        "Zdjecie",
+        "Zdjęcie",
         "Nazwa produktu",
         "Rozmiar",
-        "Ilosc",
+        "Ilość",
         "Netto",
         "VAT",
         "Brutto",
-        "Wartosc brutto",
+        "Wartość brutto",
       ],
     ],
     body: invoiceRows.map((item, index) => [
@@ -303,7 +303,7 @@ export const generateInvoicePdf = async (
   doc.setFont("helvetica", "bold");
   doc.setFontSize(10);
   doc.setTextColor(17, 24, 39);
-  doc.text("Razem brutto do zaplaty", 124, summaryTop + 49);
+  doc.text("Razem brutto do zapłaty", 124, summaryTop + 49);
   doc.text(formatCurrency(totalGross), 192, summaryTop + 49, { align: "right" });
 
   doc.setFont("helvetica", "normal");
@@ -312,7 +312,7 @@ export const generateInvoicePdf = async (
   doc.text(
     [
       "Dokument wygenerowany automatycznie w aplikacji PoliWear.",
-      "Faktura ma charakter demonstracyjny i zostala przygotowana na potrzeby projektu.",
+      "Faktura ma charakter demonstracyjny i została przygotowana na potrzeby projektu.",
     ],
     14,
     footerTop,

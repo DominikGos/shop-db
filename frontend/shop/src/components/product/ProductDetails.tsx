@@ -7,26 +7,26 @@ type ProductDetailsProps = {
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
   return (
-    <section className="border-t-2 border-[#32435f] pt-10">
-      <h2 className="mb-6 text-2xl font-bold text-[#00ff2a]">// details</h2>
-      <div className="grid gap-4 text-[#7f8aa3]">
+    <section className="border-panel border-t-2 pt-10">
+      <h2 className="text-accent mb-6 text-2xl font-bold">// details</h2>
+      <div className="text-muted grid gap-4">
         <p>
-          Produkt <span className="text-[#f3f5f7]">{product.name}</span> jest
-          aktualnie przygotowany do sprzedazy w sklepie PoliWear.
+          Produkt <span className="text-main">{product.name}</span> jest
+          aktualnie przygotowany do sprzedaży w sklepie PoliWear.
         </p>
-        <div className="grid gap-3 border-l-2 border-[#00ff2a]/40 pl-4">
+        <div className="grid gap-3 border-l-2 border-[rgba(0,255,42,0.4)] pl-4">
           <p>
-            nazwa: <span className="text-[#f3f5f7]">{product.name}</span>
+            nazwa: <span className="text-main">{product.name}</span>
           </p>
           <p>
             cena:{" "}
-            <span className="text-[#f3f5f7]">{product.price.toFixed(2)} PLN</span>
+            <span className="text-main">{product.price.toFixed(2)} PLN</span>
           </p>
-          <p className="text-sm text-[#93a0b8]">
+          <p className="text-secondary text-sm">
             Cena brutto, w tym VAT {Math.round(VAT_RATE * 100)}%
           </p>
           <p>
-            ilosc: <span className="text-[#f3f5f7]">{product.quantity}</span>
+            ilość: <span className="text-main">{product.quantity}</span>
           </p>
         </div>
       </div>

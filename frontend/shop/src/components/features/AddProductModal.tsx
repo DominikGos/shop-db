@@ -65,9 +65,9 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
       role="dialog"
       aria-modal="true"
     >
-      <div className="relative max-h-[90vh] w-[900px] max-w-full overflow-y-auto border-2 border-[#00ff2a]/40 bg-[#03080e]/95 p-12 shadow-[0_0_50px_rgba(0,255,42,0.12)] max-[700px]:px-5 max-[700px]:pb-6 max-[700px]:pt-9">
+      <div className="panel-accent relative max-h-[90vh] w-[900px] max-w-full overflow-y-auto p-12 max-[700px]:px-5 max-[700px]:pb-6 max-[700px]:pt-9">
         <button
-          className="absolute right-6 top-5 border-0 bg-transparent text-3xl text-[#7f8aa3] hover:text-[#00ff2a]"
+          className="hover-text-accent text-muted absolute right-6 top-5 border-0 bg-transparent text-3xl"
           type="button"
           onClick={handleCancel}
           aria-label="Zamknij formularz"
@@ -75,27 +75,27 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
           x
         </button>
 
-        <p className="text-3xl text-[#22ff88]">// Dodaj nowy produkt</p>
-        <h2 className="mt-2 text-lg text-[#7f8aa3]">Wprowadź dane produktu</h2>
+        <p className="text-accent-soft text-3xl">// Dodaj nowy produkt</p>
+        <h2 className="text-muted mt-2 text-lg">Wprowadź dane produktu</h2>
 
         <form className="mt-9 flex flex-col gap-6" onSubmit={handleSubmit}>
-          <label className="flex flex-col gap-2.5 font-bold text-[#f3f5f7]">
+          <label className="text-main flex flex-col gap-2.5 font-bold">
             <span>Nazwa produktu</span>
             <input
-              className="min-h-16 w-full border-2 border-[#00ff2a]/30 bg-white/10 px-5 py-4 text-[#f3f5f7] outline-none placeholder:text-[#f3f5f7]/45 focus:border-[#00ff2a]"
+              className="field-accent min-h-16 w-full border-2 px-5 py-4 placeholder:text-[#f3f5f7]/45"
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="np. Hello World Tee"
             />
-            <small className="font-normal text-[#7f8aa3]">// pole wymagane</small>
+            <small className="text-muted font-normal">// pole wymagane</small>
           </label>
 
-          <label className="flex flex-col gap-2.5 font-bold text-[#f3f5f7]">
+          <label className="text-main flex flex-col gap-2.5 font-bold">
             <span>Cena</span>
-            <div className="flex items-center border-2 border-[#00ff2a]/30 bg-white/10 focus-within:border-[#00ff2a]">
+            <div className="field-accent flex items-center border-2">
               <input
-                className="min-h-16 w-full border-0 bg-transparent px-5 py-4 text-[#f3f5f7] outline-none placeholder:text-[#f3f5f7]/45"
+                className="text-main min-h-16 w-full border-0 bg-transparent px-5 py-4 outline-none placeholder:text-[#f3f5f7]/45"
                 type="number"
                 min="0"
                 step="0.01"
@@ -103,15 +103,15 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
                 onChange={(event) => setPrice(event.target.value)}
                 placeholder="99.99"
               />
-              <strong className="pr-5 text-[#7f8aa3]">PLN</strong>
+              <strong className="text-muted pr-5">PLN</strong>
             </div>
-            <small className="font-normal text-[#7f8aa3]">// pole wymagane</small>
+            <small className="text-muted font-normal">// pole wymagane</small>
           </label>
 
-          <label className="flex flex-col gap-2.5 font-bold text-[#f3f5f7]">
+          <label className="text-main flex flex-col gap-2.5 font-bold">
             <span>Ilość</span>
             <input
-              className="min-h-16 w-full border-2 border-[#00ff2a]/30 bg-white/10 px-5 py-4 text-[#f3f5f7] outline-none placeholder:text-[#f3f5f7]/45 focus:border-[#00ff2a]"
+              className="field-accent min-h-16 w-full border-2 px-5 py-4 placeholder:text-[#f3f5f7]/45"
               type="number"
               min="0"
               step="1"
@@ -119,12 +119,12 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
               onChange={(event) => setQuantity(event.target.value)}
               placeholder="12"
             />
-            <small className="font-normal text-[#7f8aa3]">// pole wymagane</small>
+            <small className="text-muted font-normal">// pole wymagane</small>
           </label>
 
-          <label className="flex flex-col gap-2.5 font-bold text-[#f3f5f7]">
+          <label className="text-main flex flex-col gap-2.5 font-bold">
             <span>Plik zdjęciowy</span>
-            <span className="flex min-h-16 w-full cursor-pointer items-center border-2 border-[#00ff2a]/30 bg-white/10 px-5 py-4 text-[#f3f5f7] outline-none transition hover:border-[#00ff2a]">
+            <span className="field-accent flex min-h-16 w-full cursor-pointer items-center border-2 px-5 py-4 transition hover:border-[var(--color-accent)]">
               Wybierz zdjęcie
             </span>
             <input
@@ -136,27 +136,27 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
               }
             />
             {imageFile ? (
-              <small className="font-normal text-[#7f8aa3]">
+              <small className="text-muted font-normal">
                 // wybrano: {imageFile.name}
               </small>
             ) : null}
           </label>
 
           {error ? (
-            <p className="border-l-[3px] border-[#00ff2a] bg-[#00ff2a]/10 px-4 py-3.5 text-[#f3f5f7]">
+            <p className="text-main border-l-[3px] border-accent bg-[rgba(0,255,42,0.1)] px-4 py-3.5">
               {error}
             </p>
           ) : null}
 
           <div className="mt-3 flex gap-4 max-[700px]:flex-col">
             <button
-              className="min-h-16 w-1/2 border-2 border-[#00ff2a] bg-transparent font-bold text-[#22ff88] hover:bg-[#00ff2a]/10 max-[700px]:w-full"
+              className="btn-accent-subtle min-h-16 w-1/2 border-2 bg-transparent max-[700px]:w-full"
               type="submit"
             >
               Dodaj produkt
             </button>
             <button
-              className="min-h-16 w-1/2 border-2 border-[#32435f] bg-transparent font-bold text-[#7f8aa3] hover:border-[#7f8aa3] hover:text-[#f3f5f7] max-[700px]:w-full"
+              className="min-h-16 w-1/2 border-2 border-[#32435f] bg-transparent font-bold text-muted hover:border-[var(--color-muted)] hover:text-main max-[700px]:w-full"
               type="button"
               onClick={handleCancel}
             >

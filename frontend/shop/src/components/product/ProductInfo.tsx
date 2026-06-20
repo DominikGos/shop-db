@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "../ui/Button";
-import type { Product } from "../../types/product";
+import { PRODUCT_SIZES, type Product } from "../../types/product";
 import type { ProductSize } from "../../types/product";
 import { VAT_RATE } from "../../utils/vat";
 
@@ -8,8 +8,6 @@ type ProductInfoProps = {
   product: Product;
   onAddToCart: (product: Product, size: ProductSize) => void;
 };
-
-const productSizes: ProductSize[] = ["XS", "S", "M", "L", "XL"];
 
 const getProductPreview = (visual: Product["visual"]) => {
   if (visual === "terminal") {
@@ -32,7 +30,7 @@ const ProductInfo = ({ product, onAddToCart }: ProductInfoProps) => {
 
   return (
     <section className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-12 max-[900px]:grid-cols-1">
-      <div className="border-2 border-[#32435f] bg-[#0b111f]">
+      <div className="border-panel border-2 bg-[#0b111f]">
         <div
           className={`relative min-h-[680px] overflow-hidden max-[900px]:min-h-[420px] max-[520px]:min-h-[320px] ${getProductPreview(
             product.visual,
@@ -47,7 +45,7 @@ const ProductInfo = ({ product, onAddToCart }: ProductInfoProps) => {
             />
           ) : (
             <div className="absolute inset-8 grid place-items-center border border-white/10 bg-black/20 text-center">
-              <p className="text-2xl font-bold text-[#00ff2a] max-[520px]:text-lg">
+              <p className="text-accent text-2xl font-bold max-[520px]:text-lg">
                 Image placeholder
               </p>
             </div>
@@ -57,47 +55,47 @@ const ProductInfo = ({ product, onAddToCart }: ProductInfoProps) => {
 
       <div className="flex flex-col justify-center gap-8">
         <div>
-          <p className="mb-5 text-xl font-bold text-[#00ff2a] max-[520px]:text-base">
+          <p className="text-accent mb-5 text-xl font-bold max-[520px]:text-base">
             // product.info
           </p>
-          <h1 className="text-[clamp(42px,6vw,76px)] font-bold leading-tight tracking-[0.04em] text-[#f3f5f7]">
+          <h1 className="text-main text-[clamp(42px,6vw,76px)] font-bold leading-tight tracking-[0.04em]">
             {product.name}
           </h1>
         </div>
 
-        <div className="border-2 border-[#32435f] bg-black/20 px-6 py-5 text-[#6d2bbd] max-[520px]:px-4">
+        <div className="text-purple border-panel border-2 bg-black/20 px-6 py-5 max-[520px]:px-4">
           {product.subtitle}
         </div>
 
         <div className="grid gap-2">
-          <p className="flex items-baseline gap-4 text-[#00ff2a]">
+          <p className="text-accent flex items-baseline gap-4">
             <span className="text-5xl max-[520px]:text-4xl">
               {product.price.toFixed(2)}
             </span>
-            <span className="text-xl text-[#7f8aa3]">PLN</span>
+            <span className="text-muted text-xl">PLN</span>
           </p>
-          <p className="text-sm text-[#93a0b8]">
+          <p className="text-secondary text-sm">
             Cena brutto, w tym VAT {Math.round(VAT_RATE * 100)}%
           </p>
         </div>
 
-        <p className="text-lg text-[#f3f5f7]">
-          <span className="text-[#00ff2a]">&gt;</span> Stan:{" "}
-          <span className="font-bold text-[#00ff2a]">{product.quantity} szt.</span>
+        <p className="text-main text-lg">
+          <span className="text-accent">&gt;</span> Stan:{" "}
+          <span className="text-accent font-bold">{product.quantity} szt.</span>
         </p>
 
         <div className="grid gap-3">
-          <p className="font-bold text-[#f3f5f7]">
-            <span className="text-[#00ff2a]">&gt;</span> Rozmiar:{" "}
-            <span className="text-[#00ff2a]">{selectedSize}</span>
+          <p className="text-main font-bold">
+            <span className="text-accent">&gt;</span> Rozmiar:{" "}
+            <span className="text-accent">{selectedSize}</span>
           </p>
           <div className="grid grid-cols-5 gap-3">
-            {productSizes.map((size) => (
+            {PRODUCT_SIZES.map((size) => (
               <button
                 className={`min-h-12 border-2 font-bold transition ${
                   selectedSize === size
-                    ? "border-[#00ff2a] bg-[#00ff2a] text-black"
-                    : "border-[#32435f] bg-black/20 text-[#f3f5f7] hover:border-[#00ff2a] hover:text-[#00ff2a]"
+                    ? "border-[var(--color-accent)] bg-[var(--color-accent)] text-black"
+                    : "border-[#32435f] bg-black/20 text-main hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
                 }`}
                 type="button"
                 key={size}

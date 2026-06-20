@@ -7,6 +7,7 @@ import type {
   InvoiceCartItem,
 } from "../types/checkout";
 import { generateInvoicePdf } from "../utils/generateInvoicePdf";
+import { SHIPPING_COST } from "../utils/vat";
 
 type CheckoutFormProps = {
   items: InvoiceCartItem[];
@@ -14,13 +15,11 @@ type CheckoutFormProps = {
   onSuccess: () => void;
 };
 
-const deliveryPrice = 19.99;
-
 const inputClassName =
-  "min-h-12 w-full border border-[#00ff2a]/45 bg-[#08111b] px-4 py-3 text-[#f3f5f7] outline-none transition placeholder:text-[#5e687d] focus:border-[#00ff2a] focus:shadow-[0_0_0_1px_rgba(0,255,42,0.35)]";
+  "field-accent min-h-12 w-full border px-4 py-3 transition placeholder:text-[#5e687d]";
 
 const labelClassName =
-  "mb-2 block text-sm uppercase tracking-[0.14em] text-[#b0b7c8]";
+  "text-secondary mb-2 block text-sm uppercase tracking-[0.14em]";
 
 const createInitialFormData = (): CheckoutFormData => ({
   firstName: "",
@@ -93,7 +92,7 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
       ),
     [items],
   );
-  const delivery = items.length > 0 ? deliveryPrice : 0;
+  const delivery = items.length > 0 ? SHIPPING_COST : 0;
   const total = subtotal + delivery;
 
   const updateField = (field: keyof CheckoutFormData, value: string) => {
@@ -133,7 +132,7 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
   ) => {
     const error = errors[field];
     const commonProps = {
-      className: `${inputClassName} ${error ? "border-[#ff4d6d] focus:border-[#ff4d6d] focus:shadow-[0_0_0_1px_rgba(255,77,109,0.35)]" : ""}`.trim(),
+      className: `${inputClassName} ${error ? "field-error" : ""}`.trim(),
       value: formData[field],
       onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
         updateField(field, event.target.value),
@@ -163,12 +162,12 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
 
   return (
     <div className="grid gap-8">
-      <div className="flex items-start justify-between gap-4 border-b border-[#00ff2a]/25 pb-5 max-[640px]:flex-col">
+      <div className="flex items-start justify-between gap-4 border-b border-[rgba(0,255,42,0.25)] pb-5 max-[640px]:flex-col">
         <div>
-          <p className="font-mono text-3xl text-[#22ff88]">
+          <p className="text-accent-soft font-mono text-3xl">
             // Rozliczenia i wysyłka
           </p>
-          <p className="mt-2 text-sm text-[#7f8aa3]">
+          <p className="text-muted mt-2 text-sm">
             Uzupełnij dane klienta, aby wygenerować demonstracyjną fakturę PDF.
           </p>
         </div>
@@ -178,7 +177,7 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
       </div>
 
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="grid gap-5 border border-[#00ff2a]/25 bg-black/20 p-5 sm:p-6">
+        <div className="grid gap-5 border border-[rgba(0,255,42,0.25)] bg-black/20 p-5 sm:p-6">
           <div className="grid gap-5 md:grid-cols-2">
             {renderField("firstName", "Imię", true)}
             {renderField("lastName", "Nazwisko", true)}
@@ -210,26 +209,26 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
           })}
         </div>
 
-        <aside className="h-fit border border-[#00ff2a]/25 bg-[linear-gradient(180deg,rgba(8,17,27,0.96),rgba(3,8,14,0.92))] p-5 sm:p-6">
-          <p className="font-mono text-lg text-[#22ff88]">// Podsumowanie</p>
-          <div className="mt-5 grid gap-4 text-sm text-[#b0b7c8]">
+        <aside className="h-fit border border-[rgba(0,255,42,0.25)] bg-[linear-gradient(180deg,rgba(8,17,27,0.96),rgba(3,8,14,0.92))] p-5 sm:p-6">
+          <p className="text-accent-soft font-mono text-lg">// Podsumowanie</p>
+          <div className="text-secondary mt-5 grid gap-4 text-sm">
             {items.map((item) => (
               <div
-                className="border border-[#00ff2a]/15 bg-white/[0.02] p-3"
+                className="border border-[rgba(0,255,42,0.15)] bg-white/[0.02] p-3"
                 key={`${item.product.name}-${item.size}`}
               >
-                <p className="font-semibold text-[#f3f5f7]">{item.product.name}</p>
-                <p className="mt-1 text-xs uppercase tracking-[0.14em] text-[#7f8aa3]">
+                <p className="text-main font-semibold">{item.product.name}</p>
+                <p className="text-muted mt-1 text-xs uppercase tracking-[0.14em]">
                   Rozmiar {item.size} · Ilość {item.quantity}
                 </p>
-                <p className="mt-2 text-[#22ff88]">
+                <p className="text-accent-soft mt-2">
                   {(item.product.price * item.quantity).toFixed(2)} PLN
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="mt-6 grid gap-3 border-t border-[#00ff2a]/20 pt-5 text-sm text-[#b0b7c8]">
+          <div className="text-secondary mt-6 grid gap-3 border-t border-[rgba(0,255,42,0.2)] pt-5 text-sm">
             <p className="flex justify-between gap-4">
               <span>Suma częściowa</span>
               <span>{subtotal.toFixed(2)} PLN</span>
@@ -238,7 +237,7 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
               <span>Dostawa</span>
               <span>{delivery.toFixed(2)} PLN</span>
             </p>
-            <p className="flex justify-between gap-4 text-lg font-bold text-[#22ff88]">
+            <p className="text-accent-soft flex justify-between gap-4 text-lg font-bold">
               <span>Razem do zapłaty</span>
               <span>{total.toFixed(2)} PLN</span>
             </p>

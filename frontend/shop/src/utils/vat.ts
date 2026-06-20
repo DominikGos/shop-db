@@ -1,5 +1,5 @@
 export const VAT_RATE = 0.23;
-export const DELIVERY_GROSS = 19.99;
+export const SHIPPING_COST = 19.99;
 
 export const roundCurrency = (value: number) =>
   Math.round((value + Number.EPSILON) * 100) / 100;
