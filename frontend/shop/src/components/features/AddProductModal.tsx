@@ -65,7 +65,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
       role="dialog"
       aria-modal="true"
     >
-      <div className="panel-accent relative max-h-[90vh] w-[900px] max-w-full overflow-y-auto p-12 max-[700px]:px-5 max-[700px]:pb-6 max-[700px]:pt-9">
+      <div className="panel-accent relative max-h-[90vh] w-full max-w-4xl overflow-y-auto p-12 max-md:px-5 max-md:pb-6 max-md:pt-9">
         <button
           className="hover-text-accent text-muted absolute right-6 top-5 border-0 bg-transparent text-3xl"
           type="button"
@@ -82,7 +82,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
           <label className="text-main flex flex-col gap-2.5 font-bold">
             <span>Nazwa produktu</span>
             <input
-              className="field-accent min-h-16 w-full border-2 px-5 py-4 placeholder:text-[#f3f5f7]/45"
+              className="field-accent min-h-16 w-full border-2 px-5 py-4 placeholder:text-slate-200/50"
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
@@ -95,7 +95,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
             <span>Cena</span>
             <div className="field-accent flex items-center border-2">
               <input
-                className="text-main min-h-16 w-full border-0 bg-transparent px-5 py-4 outline-none placeholder:text-[#f3f5f7]/45"
+                className="text-main min-h-16 w-full border-0 bg-transparent px-5 py-4 outline-none placeholder:text-slate-200/50"
                 type="number"
                 min="0"
                 step="0.01"
@@ -111,7 +111,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
           <label className="text-main flex flex-col gap-2.5 font-bold">
             <span>Ilość</span>
             <input
-              className="field-accent min-h-16 w-full border-2 px-5 py-4 placeholder:text-[#f3f5f7]/45"
+              className="field-accent min-h-16 w-full border-2 px-5 py-4 placeholder:text-slate-200/50"
               type="number"
               min="0"
               step="1"
@@ -124,7 +124,7 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
 
           <label className="text-main flex flex-col gap-2.5 font-bold">
             <span>Plik zdjęciowy</span>
-            <span className="field-accent flex min-h-16 w-full cursor-pointer items-center border-2 px-5 py-4 transition hover:border-[var(--color-accent)]">
+            <span className="field-accent flex min-h-16 w-full cursor-pointer items-center border-2 px-5 py-4 transition hover:border-green-400">
               Wybierz zdjęcie
             </span>
             <input
@@ -143,20 +143,20 @@ const AddProductModal = ({ onClose, onAddProduct }: AddProductModalProps) => {
           </label>
 
           {error ? (
-            <p className="text-main border-l-[3px] border-accent bg-[rgba(0,255,42,0.1)] px-4 py-3.5">
+            <p className="text-main border-l-4 border-accent bg-green-400/10 px-4 py-3">
               {error}
             </p>
           ) : null}
 
-          <div className="mt-3 flex gap-4 max-[700px]:flex-col">
+          <div className="mt-3 flex gap-4 max-md:flex-col">
             <button
-              className="btn-accent-subtle min-h-16 w-1/2 border-2 bg-transparent max-[700px]:w-full"
+              className="btn-accent-subtle min-h-16 w-1/2 border-2 bg-transparent max-md:w-full"
               type="submit"
             >
               Dodaj produkt
             </button>
             <button
-              className="min-h-16 w-1/2 border-2 border-[#32435f] bg-transparent font-bold text-muted hover:border-[var(--color-muted)] hover:text-main max-[700px]:w-full"
+              className="min-h-16 w-1/2 border-2 border-panel bg-transparent font-bold text-muted hover:border-slate-500 hover:text-main max-md:w-full"
               type="button"
               onClick={handleCancel}
             >

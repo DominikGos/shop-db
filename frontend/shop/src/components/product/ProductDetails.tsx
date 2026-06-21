@@ -14,7 +14,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           Produkt <span className="text-main">{product.name}</span> jest
           aktualnie przygotowany do sprzedaży w sklepie PoliWear.
         </p>
-        <div className="grid gap-3 border-l-2 border-[rgba(0,255,42,0.4)] pl-4">
+        <div className="grid gap-3 border-l-2 border-green-400/40 pl-4">
           <p>
             nazwa: <span className="text-main">{product.name}</span>
           </p>

@@ -16,13 +16,13 @@ const Button = ({
 }: ButtonProps) => {
   const buttonStyle =
     variant === "ghost"
-      ? "border-[#7f8aa3]/40 bg-transparent text-main"
-      : "btn-accent bg-[#0a111f]/90";
+      ? "border-slate-500/40 bg-transparent text-main"
+      : "btn-accent bg-slate-950";
 
   return (
     <button
       type={type}
-      className={`inline-flex min-h-[60px] items-center justify-center gap-3 border-2 px-6 py-4 text-[17px] font-bold hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-text)] max-[480px]:min-h-14 max-[480px]:px-4 max-[480px]:text-base ${buttonStyle} ${className}`.trim()}
+      className={`inline-flex min-h-16 items-center justify-center gap-3 border-2 px-6 py-4 text-lg font-bold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white max-sm:min-h-14 max-sm:px-4 max-sm:text-base ${buttonStyle} ${className}`.trim()}
       {...props}
     >
       {icon ? (

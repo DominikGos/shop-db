@@ -33,29 +33,29 @@ const Header = ({
 
   return (
     <header className="sticky top-0 z-20 border-b-2 border-accent bg-black/90 backdrop-blur">
-      <div className="mx-auto grid min-h-24 w-full grid-cols-3 items-center gap-8 px-12 max-[900px]:flex max-[900px]:min-h-0 max-[900px]:w-full max-[900px]:flex-col max-[900px]:items-stretch max-[900px]:gap-3 max-[900px]:px-4 max-[900px]:py-4 max-[420px]:px-3">
-        <div className="ml-8 flex min-w-0 justify-start max-[900px]:ml-0 max-[900px]:justify-center">
+      <div className="mx-auto grid min-h-24 w-full grid-cols-3 items-center gap-8 px-12 max-lg:flex max-lg:min-h-0 max-lg:flex-col max-lg:items-stretch max-lg:gap-3 max-lg:px-4 max-lg:py-4">
+        <div className="ml-8 flex min-w-0 justify-start max-lg:ml-0 max-lg:justify-center">
           <Logo />
         </div>
 
-        <div className="flex min-w-0 justify-center max-[900px]:w-full">
+        <div className="flex min-w-0 justify-center max-lg:w-full">
           <SearchBar products={products} />
         </div>
 
-        <div className="flex min-w-0 justify-end max-[900px]:w-full max-[900px]:justify-center">
-          <div className="flex min-w-0 items-center gap-5 max-[900px]:w-full max-[900px]:flex-col max-[900px]:gap-3">
+        <div className="flex min-w-0 justify-end max-lg:w-full max-lg:justify-center">
+          <div className="flex min-w-0 items-center gap-5 max-lg:w-full max-lg:flex-col max-lg:gap-3">
             <nav
-              className="flex min-w-0 items-center gap-6 max-[900px]:w-full max-[900px]:justify-center max-[900px]:gap-4 max-[480px]:gap-3 max-[480px]:text-sm"
+              className="flex min-w-0 items-center gap-6 max-lg:w-full max-lg:justify-center max-lg:gap-4 max-sm:gap-3 max-sm:text-sm"
               aria-label="Główna nawigacja"
             >
               <NavLink label="Home" to="/" />
               <NavLink label="Produkty" to="/#products" />
             </nav>
 
-            <div className="flex items-center justify-center gap-4 max-[480px]:gap-3">
+            <div className="flex items-center justify-center gap-4 max-sm:gap-3">
               <div className="relative">
                 <button
-                  className="btn-accent flex min-h-14 items-center gap-2 border-2 bg-black px-5 max-[480px]:min-h-11 max-[480px]:px-3 max-[480px]:text-sm"
+                  className="btn-accent flex min-h-14 items-center gap-2 border-2 bg-black px-5 max-sm:min-h-12 max-sm:px-3 max-sm:text-sm"
                   type="button"
                   aria-expanded={isMenuOpen}
                   aria-haspopup="menu"
@@ -82,7 +82,7 @@ const Header = ({
                       Dodaj produkty
                     </button>
                     <button
-                      className="menu-item-accent flex min-h-12 items-center gap-3 border-t border-[rgba(0,255,42,0.4)] px-4 text-left"
+                      className="menu-item-accent flex min-h-12 items-center gap-3 border-t border-green-400/40 px-4 text-left"
                       type="button"
                       role="menuitem"
                       onClick={handleDeleteModeClick}
@@ -95,12 +95,12 @@ const Header = ({
               </div>
 
               <button
-                className="text-accent relative flex h-14 w-14 items-center justify-center max-[480px]:h-11 max-[480px]:w-11"
+                className="text-accent relative flex h-14 w-14 items-center justify-center max-sm:h-12 max-sm:w-12"
                 type="button"
                 aria-label="Koszyk"
                 onClick={onCartClick}
               >
-                <svg className="h-8 w-8 max-[480px]:h-6 max-[480px]:w-6" viewBox="0 0 24 24" fill="none">
+                <svg className="h-8 w-8 max-sm:h-6 max-sm:w-6" viewBox="0 0 24 24" fill="none">
                   <path
                     d="M3 5H5L7.4 15H17.2L20 8H8.2"
                     stroke="currentColor"
@@ -111,7 +111,7 @@ const Header = ({
                   <circle cx="9" cy="19" r="1.5" fill="currentColor" />
                   <circle cx="17" cy="19" r="1.5" fill="currentColor" />
                 </svg>
-                <span className="badge-accent absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full text-xs max-[480px]:h-4 max-[480px]:w-4 max-[480px]:text-[10px]">
+                <span className="badge-accent absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full text-xs max-sm:h-4 max-sm:w-4">
                   {cartItemsCount}
                 </span>
               </button>

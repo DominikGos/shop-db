@@ -83,7 +83,7 @@ const ProductCard = ({
 
   return (
     <article
-      className={`group relative grid min-h-full cursor-pointer overflow-hidden border-2 bg-[#0d1526]/95 shadow-[0_18px_50px_rgba(0,0,0,0.24)] transition duration-200 hover:border-[var(--color-accent)] hover:shadow-[0_0_28px_rgba(0,255,42,0.28)] ${
+      className={`group relative grid min-h-full cursor-pointer overflow-hidden border-2 bg-slate-950/95 shadow-xl transition duration-200 hover:border-green-400 ${
         isSelected ? "border-accent" : "border-panel"
       }`}
       role={isDeleteMode ? "button" : "link"}
@@ -104,7 +104,7 @@ const ProductCard = ({
           onClick={(event) => event.stopPropagation()}
         >
           <input
-            className="h-4 w-4 accent-[var(--color-accent)]"
+            className="h-4 w-4 accent-green-400"
             type="checkbox"
             checked={isSelected}
             onChange={onToggleSelected}
@@ -113,44 +113,44 @@ const ProductCard = ({
       ) : null}
 
       <div
-        className={`relative min-h-[304px] overflow-hidden bg-[#0b111f] max-[700px]:min-h-[180px] max-[480px]:min-h-[135px] max-[360px]:min-h-[220px] ${getProductBackground(
+        className={`relative min-h-80 overflow-hidden bg-slate-950 max-md:min-h-44 max-sm:min-h-36 ${getProductBackground(
           product.visual,
         )}`}
         aria-hidden="true"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.18),transparent_30%),linear-gradient(140deg,rgba(255,255,255,0.04),transparent_45%)]" />
-        <div className="absolute bottom-5 right-5 h-20 w-20 border border-white/10 opacity-70 max-[700px]:h-12 max-[700px]:w-12" />
+        <div className="absolute bottom-5 right-5 h-20 w-20 border border-white/10 opacity-70 max-md:h-12 max-md:w-12" />
 
         {product.imageUrl ? (
           <img
-            className="absolute inset-0 z-[1] h-full w-full object-cover"
+            className="absolute inset-0 z-10 h-full w-full object-cover"
             src={product.imageUrl}
             alt=""
           />
         ) : null}
 
         {product.category ? (
-          <span className="text-accent absolute left-4 top-4 z-[2] border border-[rgba(0,255,42,0.45)] bg-black/30 px-3 py-1.5 text-sm uppercase tracking-[0.08em] max-[700px]:left-3 max-[700px]:top-3 max-[700px]:px-2 max-[700px]:py-1 max-[700px]:text-[11px] max-[480px]:text-[10px]">
+          <span className="text-accent absolute left-4 top-4 z-20 border border-green-400/50 bg-black/30 px-3 py-1.5 text-sm uppercase tracking-wider max-md:left-3 max-md:top-3 max-md:px-2 max-md:py-1 max-md:text-xs">
             {product.category}
           </span>
         ) : null}
       </div>
 
-      <div className="grid gap-5 p-6 max-[700px]:gap-3 max-[700px]:p-4 max-[480px]:gap-2 max-[480px]:p-3 max-[360px]:gap-4 max-[360px]:p-5">
-        <p className="text-purple text-base max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:text-base">
+      <div className="grid gap-5 p-6 max-md:gap-3 max-md:p-4 max-sm:p-3">
+        <p className="text-purple text-base max-md:text-xs">
           {product.subtitle}
         </p>
-        <h3 className="text-[clamp(22px,7vw,30px)] leading-[1.35] max-[700px]:text-lg max-[480px]:text-base max-[360px]:text-2xl">
+        <h3 className="text-3xl leading-tight max-md:text-lg max-sm:text-base">
           {product.name}
         </h3>
-        <p className="text-muted text-[15px] max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:text-sm">
+        <p className="text-muted text-sm max-md:text-xs">
           Stan: {product.quantity} szt.
         </p>
-        <p className="text-accent inline-flex items-baseline gap-3 max-[700px]:gap-2">
-          <span className="text-3xl font-bold max-[700px]:text-2xl max-[480px]:text-xl max-[360px]:text-3xl">
+        <p className="text-accent inline-flex items-baseline gap-3 max-md:gap-2">
+          <span className="text-3xl font-bold max-md:text-2xl max-sm:text-xl">
             {product.price.toFixed(2)}
           </span>
-          <small className="text-muted text-[17px] max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:text-base">
+          <small className="text-muted text-base max-md:text-xs">
             PLN
           </small>
         </p>
@@ -159,13 +159,13 @@ const ProductCard = ({
             className="grid gap-3"
             onClick={(event) => event.stopPropagation()}
           >
-            <p className="text-main text-sm font-bold max-[480px]:text-xs">
+            <p className="text-main text-sm font-bold max-sm:text-xs">
               Wybierz rozmiar
             </p>
             <div className="grid grid-cols-5 gap-2">
               {PRODUCT_SIZES.map((size) => (
                 <button
-                  className="min-h-11 border-2 border-[#32435f] bg-black/20 text-sm font-bold text-main transition hover:border-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-black max-[480px]:min-h-9 max-[480px]:text-[11px]"
+                  className="min-h-11 border-2 border-panel bg-black/20 text-sm font-bold text-main transition hover:border-green-400 hover:bg-green-400 hover:text-black max-sm:min-h-9 max-sm:text-xs"
                   key={size}
                   type="button"
                   onClick={(event) => handleSizeClick(event, size)}
@@ -177,7 +177,7 @@ const ProductCard = ({
           </div>
         ) : (
           <Button
-            className="w-full group-hover:bg-[var(--color-accent)] group-hover:text-black group-hover:shadow-[0_0_24px_rgba(0,255,42,0.28)] max-[700px]:min-h-11 max-[700px]:gap-2 max-[700px]:px-2 max-[700px]:py-2 max-[700px]:text-xs max-[480px]:text-[11px] max-[360px]:min-h-14 max-[360px]:text-base"
+            className="w-full group-hover:bg-green-400 group-hover:text-black max-md:min-h-12 max-md:gap-2 max-md:px-2 max-md:py-2 max-md:text-xs"
             onClick={handleShowSizePicker}
             icon={
               <svg viewBox="0 0 24 24" fill="none">

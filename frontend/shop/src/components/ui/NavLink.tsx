@@ -14,7 +14,7 @@ const NavLink = ({ label, to }: NavLinkProps) => {
 
   return (
     <Link
-      className={`inline-flex items-center gap-2 text-[17px] transition-colors hover:text-[var(--color-accent)] max-[480px]:gap-1.5 max-[480px]:text-sm ${
+      className={`inline-flex items-center gap-2 text-base transition-colors hover:text-green-400 max-sm:gap-1 max-sm:text-sm ${
         isActive ? "text-accent" : "text-muted"
       }`}
       to={to}
