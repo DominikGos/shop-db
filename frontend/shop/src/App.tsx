@@ -48,13 +48,13 @@ function App() {
 
 const ShopApp = () => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState<Product[]>(initialProducts);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isPurchaseSuccessOpen, setIsPurchaseSuccessOpen] = useState(false);
-  const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [products, setProducts] = useState<Product[]>(initialProducts); //jakie sa produkty
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // czy modal dodawania jest otwarty
+  const [isCartOpen, setIsCartOpen] = useState(false); // czy koszyk jest otwarty
+  const [isPurchaseSuccessOpen, setIsPurchaseSuccessOpen] = useState(false); // czy zakup zakonczony sukcesem jest widoczny na ekranie
+  const [isDeleteMode, setIsDeleteMode] = useState(false); // czy działa tryb usuwania
+  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]); // które produkty są zaznaczone do usunięcia
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);// co jest w koszyku
 
   useEffect(() => {
     const loadProducts = async () => {

@@ -89,17 +89,24 @@ const loadImageAsDataUrl = (imageUrl?: string) =>
     image.src = imageUrl;
   });
 
-export const generateInvoicePdf = async (
-  formData: CheckoutFormData,
-  items: InvoiceCartItem[],
-) => {
-  const doc = new jsPDF({ unit: "mm", format: "a4" });
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
-  const invoiceNumber = generateInvoiceNumber();
-  const issueDate = new Date().toLocaleDateString("pl-PL");
+type InvoiceRow = InvoiceCartItem & {
+  grossUnit: number;
+  netUnit: number;
+  vatUnit: number;
+  grossTotal: number;
+};
 
-  const invoiceRows = items.map((item) => {
+type InvoiceTotals = {
+  productNet: number;
+  productVat: number;
+  deliveryGross: number;
+  deliveryNet: number;
+  deliveryVat: number;
+  totalGross: number;
+};
+
+const buildInvoiceRows = (items: InvoiceCartItem[]): InvoiceRow[] =>
+  items.map((item) => {
     const grossUnit = roundCurrency(item.product.price);
     const netUnit = getNetFromGross(grossUnit);
     const vatUnit = getVatFromGross(grossUnit);
@@ -114,6 +121,10 @@ export const generateInvoicePdf = async (
     };
   });
 
+const calculateInvoiceTotals = (
+  invoiceRows: InvoiceRow[],
+  hasItems: boolean,
+): InvoiceTotals => {
   const productGross = roundCurrency(
     invoiceRows.reduce((total, item) => total + item.grossTotal, 0),
   );
@@ -122,15 +133,27 @@ export const generateInvoicePdf = async (
   );
   const productVat = roundCurrency(productGross - productNet);
 
-  const deliveryGross = items.length > 0 ? SHIPPING_COST : 0;
+  const deliveryGross = hasItems ? SHIPPING_COST : 0;
   const deliveryNet = getNetFromGross(deliveryGross);
   const deliveryVat = getVatFromGross(deliveryGross);
   const totalGross = roundCurrency(productGross + deliveryGross);
 
-  const thumbnails = await Promise.all(
-    invoiceRows.map((item) => loadImageAsDataUrl(item.product.imageUrl)),
-  );
+  return {
+    productNet,
+    productVat,
+    deliveryGross,
+    deliveryNet,
+    deliveryVat,
+    totalGross,
+  };
+};
 
+const drawInvoiceHeader = (
+  doc: jsPDF,
+  pageWidth: number,
+  invoiceNumber: string,
+  issueDate: string,
+) => {
   doc.setFillColor(15, 23, 42);
   doc.rect(0, 0, pageWidth, 28, "F");
   doc.setFillColor(34, 197, 94);
@@ -143,7 +166,9 @@ export const generateInvoicePdf = async (
   doc.setFontSize(10);
   doc.text(`Numer faktury: ${invoiceNumber}`, 14, 21);
   doc.text(`Data wystawienia: ${issueDate}`, 14, 26);
+};
 
+const drawSellerAndBuyerSection = (doc: jsPDF, formData: CheckoutFormData) => {
   doc.setFillColor(249, 250, 251);
   doc.setDrawColor(209, 213, 219);
   doc.roundedRect(14, 38, 84, 42, 2, 2, "FD");
@@ -163,21 +188,27 @@ export const generateInvoicePdf = async (
   doc.setTextColor(31, 41, 55);
   doc.text(sellerDetails, 18, 57, { lineHeightFactor: 1.45 });
   doc.text(getBuyerLines(formData), 116, 57, { lineHeightFactor: 1.45 });
+};
 
+const drawProductsTable = (
+  doc: jsPDF,
+  invoiceRows: InvoiceRow[],
+  thumbnails: Array<string | null>,
+) => {
   autoTable(doc, {
     startY: 98,
     theme: "grid",
     head: [
       [
         "Lp.",
-        "Zdjęcie",
-        "Nazwa produktu",
-        "Rozmiar",
-        "Ilość",
+        "Foto",
+        "Produkt",
+        "Rozm.",
+        "Ilosc",
         "Netto",
         "VAT",
-        "Brutto",
-        "Wartość brutto",
+        "Cena br.",
+        "Wartosc",
       ],
     ],
     body: invoiceRows.map((item, index) => [
@@ -194,11 +225,11 @@ export const generateInvoicePdf = async (
     margin: { left: 14, right: 14 },
     styles: {
       font: "helvetica",
-      fontSize: 8.2,
+      fontSize: 7.8,
       textColor: [31, 41, 55],
       lineColor: [209, 213, 219],
       lineWidth: 0.15,
-      cellPadding: 2.3,
+      cellPadding: 1.8,
       overflow: "linebreak",
       valign: "middle",
     },
@@ -206,6 +237,7 @@ export const generateInvoicePdf = async (
       fillColor: [241, 245, 249],
       textColor: [17, 24, 39],
       fontStyle: "bold",
+      fontSize: 7.5,
       lineColor: [34, 197, 94],
       lineWidth: 0.35,
     },
@@ -213,15 +245,15 @@ export const generateInvoicePdf = async (
       fillColor: [249, 250, 251],
     },
     columnStyles: {
-      0: { cellWidth: 10, halign: "center" },
-      1: { cellWidth: 18, halign: "center" },
-      2: { cellWidth: 39 },
-      3: { cellWidth: 16, halign: "center" },
-      4: { cellWidth: 12, halign: "center" },
+      0: { cellWidth: 8, halign: "center" },
+      1: { cellWidth: 15, halign: "center" },
+      2: { cellWidth: 45 },
+      3: { cellWidth: 14, halign: "center" },
+      4: { cellWidth: 10, halign: "center" },
       5: { cellWidth: 20, halign: "right" },
-      6: { cellWidth: 16, halign: "right" },
-      7: { cellWidth: 20, halign: "right" },
-      8: { cellWidth: 25, halign: "right" },
+      6: { cellWidth: 18, halign: "right" },
+      7: { cellWidth: 22, halign: "right" },
+      8: { cellWidth: 30, halign: "right" },
     },
     didParseCell: (hookData) => {
       if (hookData.section === "body" && hookData.column.index === 1) {
@@ -256,9 +288,18 @@ export const generateInvoicePdf = async (
     },
   });
 
-  const tableEndY =
+  return (
     (doc as jsPDF & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY ??
-    140;
+    140
+  );
+};
+
+const drawSummaryAndFooter = (
+  doc: jsPDF,
+  pageHeight: number,
+  tableEndY: number,
+  totals: InvoiceTotals,
+) => {
   const summaryHeight = 52;
   const footerHeight = 16;
   const needsNewPage = tableEndY + 10 + summaryHeight + footerHeight > pageHeight - 14;
@@ -272,21 +313,21 @@ export const generateInvoicePdf = async (
 
   doc.setFillColor(249, 250, 251);
   doc.setDrawColor(209, 213, 219);
-  doc.roundedRect(120, summaryTop, 76, summaryHeight, 2, 2, "FD");
+  doc.roundedRect(104, summaryTop, 92, summaryHeight, 2, 2, "FD");
 
   doc.setTextColor(17, 24, 39);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
-  doc.text("Podsumowanie", 124, summaryTop + 8);
+  doc.text("Podsumowanie", 108, summaryTop + 8);
   doc.setDrawColor(34, 197, 94);
-  doc.line(124, summaryTop + 11, 154, summaryTop + 11);
+  doc.line(108, summaryTop + 11, 138, summaryTop + 11);
 
   const summaryRows = [
-    ["Suma netto", formatCurrency(productNet)],
-    ["VAT 23%", formatCurrency(productVat)],
-    ["Dostawa netto", formatCurrency(deliveryNet)],
-    ["VAT od dostawy", formatCurrency(deliveryVat)],
-    ["Dostawa brutto", formatCurrency(deliveryGross)],
+    ["Suma netto", formatCurrency(totals.productNet)],
+    ["VAT 23%", formatCurrency(totals.productVat)],
+    ["Dostawa netto", formatCurrency(totals.deliveryNet)],
+    ["VAT od dostawy", formatCurrency(totals.deliveryVat)],
+    ["Dostawa brutto", formatCurrency(totals.deliveryGross)],
   ];
 
   doc.setFont("helvetica", "normal");
@@ -294,17 +335,19 @@ export const generateInvoicePdf = async (
   doc.setTextColor(55, 65, 81);
   summaryRows.forEach(([label, value], index) => {
     const rowY = summaryTop + 18 + index * 6;
-    doc.text(label, 124, rowY);
+    doc.text(label, 108, rowY);
     doc.text(value, 192, rowY, { align: "right" });
   });
 
   doc.setDrawColor(203, 213, 225);
-  doc.line(124, summaryTop + 43, 192, summaryTop + 43);
+  doc.line(108, summaryTop + 43, 192, summaryTop + 43);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(10);
   doc.setTextColor(17, 24, 39);
-  doc.text("Razem brutto do zapłaty", 124, summaryTop + 49);
-  doc.text(formatCurrency(totalGross), 192, summaryTop + 49, { align: "right" });
+  doc.text("Razem brutto", 108, summaryTop + 49);
+  doc.text(formatCurrency(totals.totalGross), 192, summaryTop + 49, {
+    align: "right",
+  });
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(8.3);
@@ -312,12 +355,33 @@ export const generateInvoicePdf = async (
   doc.text(
     [
       "Dokument wygenerowany automatycznie w aplikacji PoliWear.",
-      "Faktura ma charakter demonstracyjny i została przygotowana na potrzeby projektu.",
+      "Faktura ma charakter demonstracyjny i zostala przygotowana na potrzeby projektu.",
     ],
     14,
     footerTop,
     { lineHeightFactor: 1.35 },
   );
+};
+
+export const generateInvoicePdf = async (
+  formData: CheckoutFormData,
+  items: InvoiceCartItem[],
+) => {
+  const doc = new jsPDF({ unit: "mm", format: "a4" });
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const invoiceNumber = generateInvoiceNumber();
+  const issueDate = new Date().toLocaleDateString("pl-PL");
+  const invoiceRows = buildInvoiceRows(items);
+  const totals = calculateInvoiceTotals(invoiceRows, items.length > 0);
+  const thumbnails = await Promise.all(
+    invoiceRows.map((item) => loadImageAsDataUrl(item.product.imageUrl)),
+  );
+
+  drawInvoiceHeader(doc, pageWidth, invoiceNumber, issueDate);
+  drawSellerAndBuyerSection(doc, formData);
+  const tableEndY = drawProductsTable(doc, invoiceRows, thumbnails);
+  drawSummaryAndFooter(doc, pageHeight, tableEndY, totals);
 
   doc.save(`${invoiceNumber.replaceAll("/", "-")}.pdf`);
 };
