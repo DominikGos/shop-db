@@ -13,6 +13,7 @@ type ProductsSectionProps = {
   onToggleProductSelection: (productId: string) => void;
 };
 
+
 const ProductsSection = ({
   products,
   isDeleteMode,

@@ -6,7 +6,7 @@ const HeroSection = () => {
 
   return (
     <section className="relative overflow-hidden" id="home">
-      <div className="hero-background relative grid min-h-screen place-items-center border-y-2 border-accent px-5 py-16 max-sm:py-12">
+      <div className="hero-background border-b-2 border-accent relative grid min-h-screen place-items-center px-5 py-16 max-sm:py-12">
         <span
           className="text-accent absolute left-8 top-1/2 -translate-y-1/2 text-8xl leading-none opacity-35 max-lg:hidden"
           aria-hidden="true"
@@ -27,7 +27,7 @@ const HeroSection = () => {
           <p className="text-accent text-xl font-bold max-sm:text-base">
             &gt; Wear your code_
           </p>
-          <Button onClick={() => navigate("/#products")}>Zobacz produkty</Button>
+          <Button onClick={() => navigate("/#products")}>Przejdź do produktów</Button>
           <p className="text-purple mt-8 text-xl max-sm:mt-4 max-sm:text-base">
             // Ready to compile style.css
           </p>

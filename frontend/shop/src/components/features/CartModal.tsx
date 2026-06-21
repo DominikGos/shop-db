@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Lock } from "lucide-react";
 import CheckoutForm from "../CheckoutForm";
 import type { CartItem, ProductSize } from "../../types/product";
 import {
@@ -212,20 +213,7 @@ const CartModal = ({
                 disabled={items.length === 0}
                 onClick={() => setView("checkout")}
               >
-                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M7 10V8C7 5.2 9.2 3 12 3C14.8 3 17 5.2 17 8V10"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M6 10H18V20H6V10Z"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <Lock className="h-5 w-5" />
                 Zamówienie
               </button>
             </div>

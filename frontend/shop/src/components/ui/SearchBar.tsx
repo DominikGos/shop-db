@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Search } from "lucide-react";
 import type { Product } from "../../types/product";
 
 type SearchBarProps = {
@@ -41,15 +42,7 @@ const SearchBar = ({ products }: SearchBarProps) => {
           className="text-accent h-6 w-6 shrink-0 max-sm:h-5 max-sm:w-5"
           aria-hidden="true"
         >
-          <svg viewBox="0 0 24 24" fill="none">
-            <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="2" />
-            <path
-              d="M16 16L21 21"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
+          <Search className="h-full w-full" />
         </span>
         <input
           className="w-full min-w-0 border-0 bg-transparent text-white outline-none placeholder:text-slate-500 max-sm:text-sm max-sm:placeholder:text-xs"

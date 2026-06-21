@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ShoppingCart } from "lucide-react";
 import Logo from "../ui/Logo";
 import NavLink from "../ui/NavLink";
 import SearchBar from "../ui/SearchBar";
@@ -37,7 +38,6 @@ const Header = ({
         <div className="ml-8 flex min-w-0 justify-start max-lg:ml-0 max-lg:justify-center">
           <Logo />
         </div>
-
         <div className="flex min-w-0 justify-center max-lg:w-full">
           <SearchBar products={products} />
         </div>
@@ -100,17 +100,7 @@ const Header = ({
                 aria-label="Koszyk"
                 onClick={onCartClick}
               >
-                <svg className="h-8 w-8 max-sm:h-6 max-sm:w-6" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M3 5H5L7.4 15H17.2L20 8H8.2"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <circle cx="9" cy="19" r="1.5" fill="currentColor" />
-                  <circle cx="17" cy="19" r="1.5" fill="currentColor" />
-                </svg>
+                <ShoppingCart className="h-8 w-8 max-sm:h-6 max-sm:w-6" />
                 <span className="badge-accent absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full text-xs max-sm:h-4 max-sm:w-4">
                   {cartItemsCount}
                 </span>
