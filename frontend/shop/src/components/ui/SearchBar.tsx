@@ -32,13 +32,13 @@ const SearchBar = ({ products }: SearchBarProps) => {
   };
 
   return (
-    <div className="relative w-[520px] max-w-full max-[900px]:w-full">
+    <div className="relative w-full max-w-xl">
       <label
-        className="flex min-h-14 w-full items-center gap-4 border-2 border-[#576c92] bg-[#07101e] px-4 max-[480px]:min-h-11 max-[480px]:gap-3 max-[480px]:px-3"
+        className="flex min-h-14 w-full items-center gap-4 border-2 border-slate-500 bg-slate-950 px-4 max-sm:min-h-12 max-sm:gap-3 max-sm:px-3"
         aria-label="Szukaj produktów"
       >
         <span
-          className="text-accent h-6 w-6 shrink-0 max-[480px]:h-5 max-[480px]:w-5"
+          className="text-accent h-6 w-6 shrink-0 max-sm:h-5 max-sm:w-5"
           aria-hidden="true"
         >
           <svg viewBox="0 0 24 24" fill="none">
@@ -52,7 +52,7 @@ const SearchBar = ({ products }: SearchBarProps) => {
           </svg>
         </span>
         <input
-          className="w-full min-w-0 border-0 bg-transparent text-white outline-none placeholder:text-[var(--color-muted)] max-[480px]:text-sm max-[480px]:placeholder:text-xs"
+          className="w-full min-w-0 border-0 bg-transparent text-white outline-none placeholder:text-slate-500 max-sm:text-sm max-sm:placeholder:text-xs"
           type="search"
           value={query}
           onBlur={() => {
@@ -65,15 +65,15 @@ const SearchBar = ({ products }: SearchBarProps) => {
       </label>
 
       {showSuggestions ? (
-        <div className="absolute left-0 right-0 top-full z-40 mt-2 grid border-2 border-[rgba(0,255,42,0.7)] bg-black shadow-[0_18px_40px_rgba(0,0,0,0.55)]">
+        <div className="absolute left-0 right-0 top-full z-40 mt-2 grid border-2 border-green-400/70 bg-black shadow-xl">
           {foundProducts.map((product) => (
             <button
-              className="grid min-h-20 grid-cols-[64px_minmax(0,1fr)] items-center gap-4 border-b border-[rgba(0,255,42,0.2)] px-3 py-2 text-left transition last:border-b-0 hover:bg-[rgba(0,255,42,0.1)]"
+              className="flex min-h-20 items-center gap-4 border-b border-green-400/20 px-3 py-2 text-left transition last:border-b-0 hover:bg-green-400/10"
               key={product.id}
               type="button"
               onClick={() => openProduct(product.id)}
             >
-              <span className="border-panel relative h-14 w-16 overflow-hidden border bg-[#111827]">
+              <span className="border-panel relative h-14 w-16 overflow-hidden border bg-slate-900">
                 {product.imageUrl ? (
                   <img
                     className="absolute inset-0 h-full w-full object-cover"

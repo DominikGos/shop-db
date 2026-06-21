@@ -53,7 +53,7 @@ const CartModal = ({
       onClick={onClose}
     >
       <div
-        className="panel-accent relative max-h-[90vh] w-[980px] max-w-full overflow-y-auto p-12 max-[700px]:px-5 max-[700px]:pb-6 max-[700px]:pt-9"
+        className="panel-accent relative max-h-[90vh] w-full max-w-5xl overflow-y-auto p-12 max-md:px-5 max-md:pb-6 max-md:pt-9"
         onClick={(event) => event.stopPropagation()}
       >
         <button
@@ -86,7 +86,7 @@ const CartModal = ({
               <div className="mt-10 grid gap-6">
                 {items.map((item) => (
                   <article
-                    className="relative grid grid-cols-[170px_minmax(0,1fr)_220px] gap-8 border-2 border-[rgba(0,255,42,0.5)] bg-white/[0.03] p-5 max-[800px]:grid-cols-1"
+                    className="relative grid grid-cols-[170px_minmax(0,1fr)_220px] gap-8 border-2 border-green-400/50 bg-white/5 p-5 max-lg:grid-cols-1"
                     key={`${item.product.id}-${item.size}`}
                   >
                     <button
@@ -98,7 +98,7 @@ const CartModal = ({
                       x
                     </button>
 
-                    <div className="relative min-h-36 overflow-hidden bg-[#141b25]">
+                    <div className="relative min-h-36 overflow-hidden bg-slate-900">
                       {item.product.imageUrl ? (
                         <img
                           className="absolute inset-0 h-full w-full object-cover"
@@ -106,13 +106,13 @@ const CartModal = ({
                           alt={item.product.name}
                         />
                       ) : (
-                        <div className="text-accent absolute inset-0 grid place-items-center bg-[linear-gradient(145deg,#1b2230,#0b0f16)] text-sm font-bold">
+                        <div className="text-accent absolute inset-0 grid place-items-center bg-slate-950 text-sm font-bold">
                           PoliWear
                         </div>
                       )}
                     </div>
 
-                    <div className="flex flex-col justify-center gap-4 pr-8 max-[800px]:pr-0">
+                    <div className="flex flex-col justify-center gap-4 pr-8 max-lg:pr-0">
                       <h3 className="text-main text-2xl font-bold">
                         {item.product.name}
                       </h3>
@@ -131,7 +131,7 @@ const CartModal = ({
                     </div>
 
                     <div className="flex flex-col justify-center gap-5">
-                      <div className="text-accent grid grid-cols-3 border-2 border-[rgba(0,255,42,0.6)] text-center">
+                      <div className="text-accent grid grid-cols-3 border-2 border-green-400/60 text-center">
                         <button
                           className="quantity-button-accent min-h-12 text-2xl"
                           type="button"
@@ -164,7 +164,7 @@ const CartModal = ({
                           +
                         </button>
                       </div>
-                      <p className="text-accent text-right text-xl font-bold max-[800px]:text-left">
+                      <p className="text-accent text-right text-xl font-bold max-lg:text-left">
                         {(item.product.price * item.quantity).toFixed(2)} PLN
                       </p>
                     </div>
@@ -173,7 +173,7 @@ const CartModal = ({
               </div>
             )}
 
-            <div className="mt-8 border-t-2 border-[rgba(0,255,42,0.5)] pt-8">
+            <div className="mt-8 border-t-2 border-green-400/50 pt-8">
               <h3 className="text-main mb-3 text-xl font-bold">
                 Podsumowanie
               </h3>
@@ -201,7 +201,7 @@ const CartModal = ({
                 </p>
               </div>
 
-              <div className="text-accent mt-7 flex items-center justify-between gap-4 border-t border-[#7f8aa3]/60 pt-7 text-2xl font-bold max-[520px]:grid">
+              <div className="text-accent mt-7 flex items-center justify-between gap-4 border-t border-slate-500/60 pt-7 text-2xl font-bold max-sm:grid">
                 <span>Razem brutto</span>
                 <span>{totalGross.toFixed(2)} PLN</span>
               </div>

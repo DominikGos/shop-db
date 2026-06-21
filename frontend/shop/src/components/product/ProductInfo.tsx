@@ -29,10 +29,10 @@ const ProductInfo = ({ product, onAddToCart }: ProductInfoProps) => {
   const [selectedSize, setSelectedSize] = useState<ProductSize>("M");
 
   return (
-    <section className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-12 max-[900px]:grid-cols-1">
-      <div className="border-panel border-2 bg-[#0b111f]">
+    <section className="grid grid-cols-2 gap-12 max-lg:grid-cols-1">
+      <div className="border-panel border-2 bg-slate-950">
         <div
-          className={`relative min-h-[680px] overflow-hidden max-[900px]:min-h-[420px] max-[520px]:min-h-[320px] ${getProductPreview(
+          className={`relative min-h-[680px] overflow-hidden max-lg:min-h-[420px] max-sm:min-h-80 ${getProductPreview(
             product.visual,
           )}`}
         >
@@ -45,7 +45,7 @@ const ProductInfo = ({ product, onAddToCart }: ProductInfoProps) => {
             />
           ) : (
             <div className="absolute inset-8 grid place-items-center border border-white/10 bg-black/20 text-center">
-              <p className="text-accent text-2xl font-bold max-[520px]:text-lg">
+              <p className="text-accent text-2xl font-bold max-sm:text-lg">
                 Image placeholder
               </p>
             </div>
@@ -55,21 +55,21 @@ const ProductInfo = ({ product, onAddToCart }: ProductInfoProps) => {
 
       <div className="flex flex-col justify-center gap-8">
         <div>
-          <p className="text-accent mb-5 text-xl font-bold max-[520px]:text-base">
+          <p className="text-accent mb-5 text-xl font-bold max-sm:text-base">
             // product.info
           </p>
-          <h1 className="text-main text-[clamp(42px,6vw,76px)] font-bold leading-tight tracking-[0.04em]">
+          <h1 className="text-main text-6xl font-bold leading-tight tracking-wide max-sm:text-4xl">
             {product.name}
           </h1>
         </div>
 
-        <div className="text-purple border-panel border-2 bg-black/20 px-6 py-5 max-[520px]:px-4">
+        <div className="text-purple border-panel border-2 bg-black/20 px-6 py-5 max-sm:px-4">
           {product.subtitle}
         </div>
 
         <div className="grid gap-2">
           <p className="text-accent flex items-baseline gap-4">
-            <span className="text-5xl max-[520px]:text-4xl">
+            <span className="text-5xl max-sm:text-4xl">
               {product.price.toFixed(2)}
             </span>
             <span className="text-muted text-xl">PLN</span>
@@ -94,8 +94,8 @@ const ProductInfo = ({ product, onAddToCart }: ProductInfoProps) => {
               <button
                 className={`min-h-12 border-2 font-bold transition ${
                   selectedSize === size
-                    ? "border-[var(--color-accent)] bg-[var(--color-accent)] text-black"
-                    : "border-[#32435f] bg-black/20 text-main hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                    ? "border-green-400 bg-green-400 text-black"
+                    : "border-panel bg-black/20 text-main hover:border-green-400 hover:text-green-400"
                 }`}
                 type="button"
                 key={size}

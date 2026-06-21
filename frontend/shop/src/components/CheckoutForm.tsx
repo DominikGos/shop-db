@@ -16,10 +16,10 @@ type CheckoutFormProps = {
 };
 
 const inputClassName =
-  "field-accent min-h-12 w-full border px-4 py-3 transition placeholder:text-[#5e687d]";
+  "field-accent min-h-12 w-full border px-4 py-3 transition placeholder:text-slate-500";
 
 const labelClassName =
-  "text-secondary mb-2 block text-sm uppercase tracking-[0.14em]";
+  "text-secondary mb-2 block text-sm uppercase tracking-widest";
 
 const createInitialFormData = (): CheckoutFormData => ({
   firstName: "",
@@ -142,7 +142,7 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
     return (
       <label className="block">
         <span className={labelClassName}>
-          {label} {isRequired ? <span className="text-[#ff4d6d]">*</span> : null}
+          {label} {isRequired ? <span className="text-rose-500">*</span> : null}
         </span>
         {options?.textarea ? (
           <textarea
@@ -154,7 +154,7 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
           <input {...commonProps} type={options?.type ?? "text"} />
         )}
         {error ? (
-          <span className="mt-2 block text-sm text-[#ff6b6b]">{error}</span>
+          <span className="mt-2 block text-sm text-red-400">{error}</span>
         ) : null}
       </label>
     );
@@ -162,7 +162,7 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
 
   return (
     <div className="grid gap-8">
-      <div className="flex items-start justify-between gap-4 border-b border-[rgba(0,255,42,0.25)] pb-5 max-[640px]:flex-col">
+      <div className="flex items-start justify-between gap-4 border-b border-green-400/25 pb-5 max-sm:flex-col">
         <div>
           <p className="text-accent-soft font-mono text-3xl">
             // Rozliczenia i wysyłka
@@ -177,7 +177,7 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
       </div>
 
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="grid gap-5 border border-[rgba(0,255,42,0.25)] bg-black/20 p-5 sm:p-6">
+        <div className="grid gap-5 border border-green-400/25 bg-black/20 p-5 sm:p-6">
           <div className="grid gap-5 md:grid-cols-2">
             {renderField("firstName", "Imię", true)}
             {renderField("lastName", "Nazwisko", true)}
@@ -209,16 +209,16 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
           })}
         </div>
 
-        <aside className="h-fit border border-[rgba(0,255,42,0.25)] bg-[linear-gradient(180deg,rgba(8,17,27,0.96),rgba(3,8,14,0.92))] p-5 sm:p-6">
+        <aside className="h-fit border border-green-400/25 bg-slate-950/90 p-5 sm:p-6">
           <p className="text-accent-soft font-mono text-lg">// Podsumowanie</p>
           <div className="text-secondary mt-5 grid gap-4 text-sm">
             {items.map((item) => (
               <div
-                className="border border-[rgba(0,255,42,0.15)] bg-white/[0.02] p-3"
+                className="border border-green-400/20 bg-white/5 p-3"
                 key={`${item.product.name}-${item.size}`}
               >
                 <p className="text-main font-semibold">{item.product.name}</p>
-                <p className="text-muted mt-1 text-xs uppercase tracking-[0.14em]">
+                <p className="text-muted mt-1 text-xs uppercase tracking-widest">
                   Rozmiar {item.size} · Ilość {item.quantity}
                 </p>
                 <p className="text-accent-soft mt-2">
@@ -228,7 +228,7 @@ const CheckoutForm = ({ items, onBack, onSuccess }: CheckoutFormProps) => {
             ))}
           </div>
 
-          <div className="text-secondary mt-6 grid gap-3 border-t border-[rgba(0,255,42,0.2)] pt-5 text-sm">
+          <div className="text-secondary mt-6 grid gap-3 border-t border-green-400/20 pt-5 text-sm">
             <p className="flex justify-between gap-4">
               <span>Suma częściowa</span>
               <span>{subtotal.toFixed(2)} PLN</span>
